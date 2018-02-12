@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Node server
 
-Run `node server` to run the express app on nodejs. This app is already integrated with Angular 5. The command `ng server` will deploy ONLY the angular app
+Run `node server` to run the express app on nodejs. This app is already integrated with Angular 5. The command `ng serve` will deploy ONLY the angular app
 
 ## Development server
 
