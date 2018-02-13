@@ -2,7 +2,6 @@ const mongoMod = require('../config/database/mongo');
 const response = require('../config/database/data');
 
 exports.getUsers = function (req, res) {
-
     // An object of type user could be used
     // This function could be inside the User class (model?)
     mongoMod.connection((db) => {

@@ -45,10 +45,10 @@ module.exports = function () {
     /* app.set('views', './app/views');
      app.set('view engine', 'ejs');
      app.engine('html', require('ejs').renderFile);*/
-     ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
 
-// Angular DIST output folder
-app.use(express.static(path.join(__dirname, '../../', 'dist')));
+    // Angular DIST output folder
+    app.use(express.static(path.join(__dirname, '../../', 'dist')));
 
     // Load routes
     require('../routes/user.server.routes')(app);

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 
 import { AppComponent } from './app.component';
@@ -30,9 +31,11 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    MDBBootstrapModule.forRoot(),
     HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
+  schemas: [ NO_ERRORS_SCHEMA ],
   providers: [UserService],
   bootstrap: [AppComponent]
 })
