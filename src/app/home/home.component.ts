@@ -8,7 +8,8 @@ import { UserService } from '../services/user/user.service';
 })
 export class HomeComponent implements OnInit {
 
-  users: Array<any>; // Eventually it should be an array of User (Class)
+  users: any[]; // Eventually it should be an array of User (Class)
+  error: any;
 
   constructor(private UserService: UserService) { 
     
@@ -16,7 +17,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.UserService.getUsers()
-    .subscribe(res => this.users = res);
+    .subscribe(
+      (data:any[]) => this.users = data,
+      err => {console.error(err)},
+      () => console.log("Done")
+      );
   }
-
 }

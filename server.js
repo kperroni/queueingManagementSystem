@@ -9,6 +9,10 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Load the 'express' module
 const configureExpress = require('./app/config/express');
+const mongoose = require('./app/config/mongoose');
+
+// Create a new Mongoose connection instance
+const db = mongoose();
 
 // Create a new Express application instance
 const app = configureExpress();
