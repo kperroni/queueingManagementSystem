@@ -5,11 +5,11 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { UserService } from './services/user/user.service';
-import { HeaderComponent } from './shared/layout/header/header.component';
-import { FooterComponent } from './shared/layout/footer/footer.component';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
+import { UserService } from './modules/user/user.service';
+import { HeaderComponent } from './shared/layout/components/header/header.component';
+import { FooterComponent } from './shared/layout/components/footer/footer.component';
+import { HomeComponent } from './modules/misc/components/home/home.component';
+import { AboutComponent } from './modules/misc/components/about/about.component';
 import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
