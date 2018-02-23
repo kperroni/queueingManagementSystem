@@ -50,6 +50,8 @@ module.exports = function () {
     // Angular DIST output folder
     app.use(express.static(path.join(__dirname, '../../', 'dist')));
 
+    app.set('port', process.env.PORT || 3000);
+
     // Load routes
     require('../routes/user.server.routes')(app);
     require('../routes/index.server.routes')(app);

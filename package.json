@@ -8,7 +8,8 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "server": "node node_modules\\nodemon\\bin\\nodemon.js server.js"
   },
   "private": true,
   "dependencies": {
@@ -33,6 +34,7 @@
     "mongodb": "^3.0.2",
     "mongoose": "^5.0.6",
     "morgan": "^1.9.0",
+    "nodemon": "^1.15.1",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },
