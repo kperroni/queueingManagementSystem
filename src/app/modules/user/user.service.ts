@@ -9,8 +9,14 @@ export class UserService {
   result:any;
   constructor(private http: HttpClient) { }
 
-    getUsers()
-    {
-      return this.http.get('/getUsers');
-    }
+  getUsers()
+  {
+    return this.http.get('/getUsers');
+  }
+
+  login(body)
+  {
+    return this.http.get('/getUsers');
+//    return this.http.post('/login', body);
+  }
 }

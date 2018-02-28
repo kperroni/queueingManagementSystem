@@ -58,7 +58,7 @@ module.exports = function () {
 
     // Configure static file serving
     app.use(express.static('./public'));
-
+    
     // Return the Express application instance
     return app;
 };

@@ -18,9 +18,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.UserService.getUsers()
     .subscribe(
-      (
-      data:any[]) => this.users = data,
+      (data:any[]) => this.users = data,
       err => {console.error(err)}
-      );
+    );
   }
+
 }

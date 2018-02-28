@@ -11,13 +11,15 @@ import { FooterComponent } from './shared/layout/components/footer/footer.compon
 import { HomeComponent } from './modules/misc/components/home/home.component';
 import { AboutComponent } from './modules/misc/components/about/about.component';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './modules/login/login.component';
 
 const appRoutes: Routes = [
   
   {path: 'home', component: HomeComponent},
   {path: 'about', component: AboutComponent},
+  {path: 'login', component: LoginComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: '**', redirectTo: '/home', pathMatch: 'full'},
+  {path: '**', redirectTo: '/home', pathMatch: 'full'}
   
 ]
 
@@ -27,7 +29,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    AboutComponent
+    AboutComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
