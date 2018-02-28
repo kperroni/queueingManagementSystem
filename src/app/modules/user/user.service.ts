@@ -16,7 +16,7 @@ export class UserService {
 
   login(body)
   {
-    return this.http.get('/getUsers');
+    return this.http.post('/login', body);
 //    return this.http.post('/login', body);
   }
 }

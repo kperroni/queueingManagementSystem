@@ -17,16 +17,14 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  submit() {
-    console.log("submit1");
+  logIn() {
     this.UserService.login({username:this.username, password:this.password})
     .subscribe(
       (data:any) => {
         this.ret = data;
-        console.log("ret", this.ret);
+        console.log("retorno", this.ret);
       },
       err => {console.error(err);}
-    );
-    console.log("submit2");
+    );   
   }
 }
