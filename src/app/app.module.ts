@@ -7,18 +7,21 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './modules/user/user.service';
+import { TicketService } from './modules/ticket/ticket.service';
 import { HeaderComponent } from './shared/layout/components/header/header.component';
 import { FooterComponent } from './shared/layout/components/footer/footer.component';
 import { HomeComponent } from './modules/misc/components/home/home.component';
 import { AboutComponent } from './modules/misc/components/about/about.component';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './modules/login/login.component';
+import { CreateTicketComponent } from './modules/ticket/components/create-ticket/create-ticket.component';
 
 const appRoutes: Routes = [
   
   {path: 'home', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'createTicket', component: CreateTicketComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', redirectTo: '/home', pathMatch: 'full'}
   
@@ -31,7 +34,8 @@ const appRoutes: Routes = [
     FooterComponent,
     HomeComponent,
     AboutComponent,
-    LoginComponent
+    LoginComponent,
+    CreateTicketComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
-  providers: [UserService],
+  providers: [UserService, TicketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

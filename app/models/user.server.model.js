@@ -14,7 +14,7 @@ var UserSchema = new Schema({
     email: String,
     username: {
         type: String,           // we keep this as string, but we are going to use it to storage the id student or the id of an employer.
-        unique: true,           // defining username as unique because this is going to be the primary key for this collection
+        unique: true,         // defining username as unique because this is going to be the primary key for this collection
         required: true
     },
     password: {
