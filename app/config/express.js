@@ -6,6 +6,8 @@ const compress = require('compression');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const session = require('express-session');
+const passport = require('passport');
+const flash = require('connect-flash');
 const path = require('path');
 const http = require('http');
 
@@ -39,13 +41,12 @@ module.exports = function () {
         secret: config.sessionSecret // secret used to sign the session ID cookie
     }));
 
-    // Not active for now since Angular 5 takes care of the view
-    ////////////////////////////////////////////////////////////
-    // Set the application view engine and 'views' folder
-    /* app.set('views', './app/views');
-     app.set('view engine', 'ejs');
-     app.engine('html', require('ejs').renderFile);*/
-    ////////////////////////////////////////////////////////////
+    // Configure the flash messages middleware
+    app.use(flash());
+
+    // Configure the Passport middleware
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     // Angular DIST output folder
     app.use(express.static(path.join(__dirname, '../../', 'dist')));
@@ -59,7 +60,7 @@ module.exports = function () {
 
     // Configure static file serving
     app.use(express.static('./public'));
-    
+
     // Return the Express application instance
     return app;
 };

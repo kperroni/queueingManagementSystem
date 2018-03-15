@@ -1,8 +1,21 @@
 module.exports = function (app) {
     //load the controllers
     var user = require('../controllers/user.server.controller');
+    const passport = require('passport');
+
     //handle the routing of get and post request
     app.get('/getUsers', user.getUsers);
     app.post('/createUser', user.createUser);
-    app.post('/login', user.login);
-};
+    app.post('/login', (req, res, next) => {
+        passport.authenticate('local', (err, user, info) => {
+            if (err) { return next(err); }
+            if (!user) { res.json([{ message: "0" }]); }
+            else {
+                req.logIn(user, function (err) {
+                    if (err) { return next(err); }
+                    res.json([{ message: "1" }, { username: user.username, firstName: user.firstName }]);
+                });
+            }
+        })(req, res, next);
+    });
+}
