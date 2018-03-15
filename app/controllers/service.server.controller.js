@@ -1,34 +1,34 @@
-// Load the 'User' Mongoose model
-var User = require('mongoose').model('User');
+// Load the 'Service' Mongoose model
+var ServiceModel = require('mongoose').model('Service');
 
-exports.createUser = function (req, res, next) {
+exports.createService = function (req, res, next) {
 
-    // Create a new instance of the 'User' Mongoose model
-    var user = new User(req.body);
-    console.log("body: " + req.body.username);
+    // Create a new instance of the 'Service' Mongoose model
+    var service = new ServiceModel(req.body);
+    console.log("body: " + req.body);
     console.log(req.body);
-    // Use the 'User' instance's 'save' method to save a new user document
-    user.save(function (err) {
+    // Use the 'Service' instance's 'save' method to save a new Service document
+    service.save(function (err) {
         if (err) {
             // Call the next middleware with an error message
             return next(err);
         } else {
             // Use the 'response' object to send a JSON response
-            res.json(user);
+            res.json(service);
 
         }
     });
 };
 
 // Create a new 'getUsers' controller method
-exports.getUsers = function (req, res, next) {
-    console.log("controller", "getUsers");
+exports.getServices = function (req, res, next) {
+    console.log("controller", "getServices");
     // Use the 'User' instance's 'find' method to retrieve a new user document
-    User.find({}, function (err, users) {
+    Service.find({}, function (err, services) {
         if (err) {
             return next(err);
         } else {
-            res.json(users);
+            res.json(services);
         }
     });
 };
