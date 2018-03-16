@@ -17,7 +17,8 @@ import { AboutComponent } from './modules/misc/components/about/about.component'
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './modules/login/components/login.component';
 import { CreateTicketComponent } from './modules/ticket/components/create-ticket/create-ticket.component';
-import { AppSessionService } from './shared/session/session.service';
+import { AppSessionService } from './shared/services/session/session.service';
+import { MessageService } from './shared/services/messages/message.service';
 
 const appRoutes: Routes = [
 
@@ -50,7 +51,7 @@ const appRoutes: Routes = [
     ToasterModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  providers: [UserService, TicketService, AppSessionService],
+  providers: [UserService, TicketService, AppSessionService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
