@@ -1,7 +1,7 @@
 module.exports = function (app) {
     //load the controllers
-    var user = require('../controllers/queue.server.controller');
+    var guest = require('../controllers/guest.server.controller');
     //handle the routing of get and post request
-    app.get('/getQueue', user.getQueues);
-    app.post('/createQueue', user.createQueue);
+    app.get('/getGuests', user.getGuests);
+    app.post('/createGuest', user.createGuest);
 };
