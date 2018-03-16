@@ -13,7 +13,7 @@ module.exports = function (app) {
             else {
                 req.logIn(user, function (err) {
                     if (err) { return next(err); }
-                    res.json([{ message: "1" }, { username: user.username, firstName: user.firstName }]);
+                    res.json([{ message: "1" }, { id: user._id, username: user.username, firstName: user.firstName }]);
                 });
             }
         })(req, res, next);

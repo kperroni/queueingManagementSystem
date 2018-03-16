@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
             case '1': {
               this.session.setSessionToken(loginResult[1]);
               this.router.navigate(['/home']);
-              this.message.setMessage('success', 'Qme', 'Welcome! ' +loginResult[1].firstName);
+              this.message.setMessage('success', 'Qme', 'Welcome! ' +loginResult[1].id);
               break;
             }
           }
