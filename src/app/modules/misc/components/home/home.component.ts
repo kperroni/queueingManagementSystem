@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../user/user.service';
+import { ToasterService } from '../../../../../../node_modules/angular5-toaster/angular5-toaster';
+import { MessageService } from '../../../../shared/services/messages/message.service';
 
 @Component({
   selector: 'app-home',
@@ -8,14 +10,20 @@ import { UserService } from '../../../user/user.service';
 })
 export class HomeComponent implements OnInit {
 
-  users: any[]; // Eventually it should be an array of User (Class)
+  users: any[];
   error: any;
-
-  constructor(private UserService: UserService) { 
+  constructor(private UserService: UserService, private toaster: ToasterService, private message: MessageService) { 
     
   }
 
   ngOnInit() {
+
+    if(this.message.getMessage().clear === "0"){
+      let toastMessage = this.message.getMessage();
+      this.toaster.pop(toastMessage.type, toastMessage.title, toastMessage.body);
+      this.message.clearMessage();
+    }
+
     this.UserService.getUsers()
     .subscribe(
       (data:any[]) => this.users = data,
