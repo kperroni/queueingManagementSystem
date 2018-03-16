@@ -20,7 +20,7 @@ exports.createGuest = function (req, res, next) {
 };
 
 // Create a new 'getGuest' controller method
-exports.getGuest = function (req, res, next) {
+exports.getGuests = function (req, res, next) {
     console.log("controller", "getGuests");
     // Use the 'GuestModel' instance's 'find' method to retrieve a new guests document
     GuestModel.find({}, function (err, guests) {
