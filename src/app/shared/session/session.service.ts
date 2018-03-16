@@ -14,8 +14,11 @@ export class AppSessionService {
   getSessionToken() {
     let storedToken = sessionStorage.getItem(this.tokenKey);
     let token = JSON.parse(storedToken);
-    if (!storedToken) throw 'no token found';
-    return token;
+    if (!storedToken) {
+      return null;
+    }
+    else
+      return token;
   }
 
   destroySessionToken() {

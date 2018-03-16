@@ -16,5 +16,5 @@
       "dom"
     ]
   },
-  "include": ["node_modules/angular-bootstrap-md/**/*.ts",  "src/**/*.ts"] // add this line
+  "include": ["node_modules/angular-bootstrap-md/**/*.ts", "src/**/*.ts"] // add this line
 }

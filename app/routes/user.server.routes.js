@@ -4,9 +4,9 @@ module.exports = function (app) {
     const passport = require('passport');
 
     //handle the routing of get and post request
-    app.get('/getUsers', user.getUsers);
-    app.post('/createUser', user.createUser);
-    app.post('/login', (req, res, next) => {
+    app.get('/user/getUsers', user.getUsers);
+    app.post('/user/createUser', user.createUser);
+    app.post('/user/logIn', (req, res, next) => {
         passport.authenticate('local', (err, user, info) => {
             if (err) { return next(err); }
             if (!user) { res.json([{ message: "0" }]); }
@@ -18,4 +18,8 @@ module.exports = function (app) {
             }
         })(req, res, next);
     });
+    app.get('/user/logOut', function(req, res){
+        req.logout();
+        res.json({message:"1"});
+      });
 }

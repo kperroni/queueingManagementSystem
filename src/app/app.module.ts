@@ -3,6 +3,8 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { FormsModule } from '@angular/forms';
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToasterModule, ToasterService} from 'angular5-toaster';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -43,7 +45,9 @@ const appRoutes: Routes = [
     FormsModule,
     MDBBootstrapModule.forRoot(),
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    BrowserAnimationsModule,
+    ToasterModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [UserService, TicketService, AppSessionService],
