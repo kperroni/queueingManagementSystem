@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../user/user.service';
-import { ToasterService } from '../../../../../../node_modules/angular5-toaster/angular5-toaster';
+import { ToasterService } from 'angular5-toaster';
 import { MessageService } from '../../../../shared/services/messages/message.service';
 
 @Component({

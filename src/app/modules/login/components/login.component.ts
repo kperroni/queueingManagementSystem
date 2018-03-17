@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { UserService } from '../../user/user.service';
 import { AppSessionService } from '../../../shared/services/session/session.service';
 import { MessageService } from '../../../shared/services/messages/message.service';
-import { ToasterService } from '../../../../../node_modules/angular5-toaster/angular5-toaster';
+import { ToasterService } from 'angular5-toaster';
 
 @Component({
   selector: 'app-login',
