@@ -10,12 +10,16 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 // Load the 'express' module
 const configureExpress = require('./app/config/express');
 const mongoose = require('./app/config/mongoose');
+const configurePassport = require('./app/config/passport');
 
 // Create a new Mongoose connection instance
 const db = mongoose();
 
 // Create a new Express application instance
 const app = configureExpress();
+
+// Configure the Passport middleware
+const passport = configurePassport();
 
 // Use the Express application instance to listen to the '3001' port
 app.listen(app.get('port'));
