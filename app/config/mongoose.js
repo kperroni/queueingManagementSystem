@@ -6,9 +6,13 @@ var config = require('./config'),
 module.exports = function () {
     // Use Mongoose to connect to MongoDB
     var db = mongoose.connect(config.db);
-    // Load the 'User' model 
+
     require('../models/user.server.model');
     require('../models/ticket.server.model');
+    require('../models/queue.server.model');
+    require('../models/service.server.model');
+    require('../models/guest.server.model');
+    require('../models/student.server.model');
     // Return the Mongoose connection instance
     return db;
 };

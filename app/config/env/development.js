@@ -2,5 +2,5 @@
 module.exports = {
     //To sign the session identifier, use a secret string
     sessionSecret: 'developmentSessionSecret',
-    db: 'mongodb://localhost/mean-book',
+    db: 'mongodb://localhost/Qme',
 };

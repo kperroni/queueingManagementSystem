@@ -42,6 +42,7 @@ exports.login = function(req, res, next) {
             if(retobj) {
                 if(retobj.password === req.body.password) {
                     req.session.user = req.body.username;
+                    req.locals.user = req.body.username;
                     req.session.login = 'ok';
                     console.log("login success");
                     res.send({login:true});

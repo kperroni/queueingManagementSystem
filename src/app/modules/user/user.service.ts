@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map'
 @Injectable()
 export class UserService {
 
+  username:String;
   result:any;
   constructor(private http: HttpClient) { }
 
@@ -17,6 +18,5 @@ export class UserService {
   login(body)
   {
     return this.http.post('/login', body);
-//    return this.http.post('/login', body);
   }
 }
