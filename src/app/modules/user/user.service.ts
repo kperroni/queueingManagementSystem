@@ -12,11 +12,16 @@ export class UserService {
 
   getUsers()
   {
-    return this.http.get('/getUsers');
+    return this.http.get('user/getUsers');
   }
 
-  login(body)
+  logIn(body)
   {
-    return this.http.post('/login', body);
+    return this.http.post('user/logIn', body);
+
+  }
+
+  logOut(){
+    return this.http.get('user/logOut');
   }
 }
