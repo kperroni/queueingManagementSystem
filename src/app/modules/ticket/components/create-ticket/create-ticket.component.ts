@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TicketService } from '../../ticket.service';
 import { ServiceService } from '../../../service/service.service';
 import { Router } from '@angular/router';
+import { MessageService } from '../../../../shared/services/messages/message.service';
+import { ToasterService } from 'angular5-toaster';
+
 
 @Component({
   selector: 'app-create-ticket',
@@ -27,10 +30,8 @@ export class CreateTicketComponent implements OnInit {
   services: any[]; // Eventually it should be an array of User (Class)
   error: any;
    
-
-  message: String;
-
-  constructor(private ticketService: TicketService, private serviceService: ServiceService, private router: Router) { }
+  constructor(private ticketService: TicketService, private serviceService: ServiceService, private router: Router, 
+    private message: MessageService, private toaster: ToasterService) { }
 
   ngOnInit() {
     this.serviceService.getServices()
@@ -48,18 +49,23 @@ export class CreateTicketComponent implements OnInit {
     this.ticket.userId = "5aaae408635549a46d59a051";
     this.ticketService.createTicket(this.ticket)
       .subscribe(
-      (data:any) => {
-        if(data) {
-          console.log("return", data);
-          if(data.err) {
-            console.error(data.err);
-            this.message = data.err;
-          } else {
-            this.router.navigate(['home']);
+        (data: any) => {
+          let creationResult = data;
+          console.log("data", data);
+          switch (creationResult.message) {
+            case '0': {
+              this.toaster.pop('error', 'Qme', 'Missing information. Please try again');
+              break;
+            }
+            case '1': {
+              this.router.navigate(['/home']);
+              this.message.setMessage('success', 'Qme', 'The ticket number ' + creationResult.ticketNumber + ' was successfully created!');
+              break;
+            }
           }
-        }
-      }
-    );
+        },
+        err => { console.error(err); }
+      );
   }
 
 }

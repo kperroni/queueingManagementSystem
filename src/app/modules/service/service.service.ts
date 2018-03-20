@@ -8,7 +8,7 @@ export class ServiceService {
 
   getServices()
   {
-    return this.http.get('/getServices');
+    return this.http.get('service/getServices');
   }  
 
 }
