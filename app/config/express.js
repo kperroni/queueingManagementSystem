@@ -54,12 +54,14 @@ module.exports = function () {
 
     // Load routes
     require('../routes/user.server.routes')(app);
-    require('../routes/index.server.routes')(app);
     require('../routes/ticket.server.routes')(app);
     require('../routes/queue.server.routes')(app);
     require('../routes/service.server.routes')(app);
     require('../routes/guest.server.routes')(app);
     require('../routes/student.server.routes')(app);
+    
+    // most be the last one
+    require('../routes/index.server.routes')(app);
 
     // Configure static file serving
     app.use(express.static('./public'));

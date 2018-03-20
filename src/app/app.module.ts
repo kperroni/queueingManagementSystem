@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './modules/user/user.service';
 import { TicketService } from './modules/ticket/ticket.service';
+import { ServiceService } from './modules/service/service.service';
 import { HeaderComponent } from './shared/layout/components/header/header.component';
 import { FooterComponent } from './shared/layout/components/footer/footer.component';
 import { HomeComponent } from './modules/misc/components/home/home.component';
@@ -45,7 +46,11 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
-  providers: [UserService, TicketService],
+  providers: [
+    UserService, 
+    TicketService, 
+    ServiceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

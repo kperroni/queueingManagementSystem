@@ -1,21 +1,38 @@
-  <div class="container">
-    <h1>Sign Up</h1>
-    <p>Please fill in this form to create an account.</p>
-    <hr>
+<div class="container">
+    <p class="h5 text-center mb-4">Creation of a new ticket</p>
 
-    <label for="ticketId"><b>Ticket ID</b></label>
-    <input type="text" [(ngModel)]="ticketId" name="ticketId">
-
-    <label for="service"><b>Service</b></label>
-    <input type="text" [(ngModel)]="service" name="service">
-
-    <label for="subject"><b>Subject</b></label>
-    <input type="text" [(ngModel)]="subject" name="subject">
-
-    <label for="description"><b>Description</b></label>
-    <input type="text" [(ngModel)]="description" name="description">
-
-    <div class="clearfix">
-      <button (click)="onClickCreateTicket()" class="btn btn-success btn-lg float-right" id="btnLogin">Create Ticket</button>
+    <div class="md-form">
+        <i class="fa fa-user prefix grey-text"></i>
+        <input type="text" id="form3" class="form-control" mdbActive>
+        <label for="form3">Your name</label>
     </div>
-  </div>
+
+    <div class="form-group">
+        <i class="fa fa-envelope prefix grey-text"></i>
+        <label for="form2">Service</label>
+        <select [(ngModel)]="ticket.serviceId" id="form2" name="serviceId" required class="selectpicker" data-style="btn-primary" mdbActive>
+            <option *ngFor='let service of services' [value]="service._id">{{ service.name }}</option>
+        </select>    
+    </div>
+
+    <div class="md-form">
+        <i class="fa fa-tag prefix grey-text"></i>
+        <input [(ngModel)]="ticket.subject" type="text" required #subject="ngModel" name="subject" id="subject" class="form-control" mdbActive>
+        <div *ngIf="subject.invalid && (subject.dirty || subject.touched)" class="alert alert-danger">
+            <div *ngIf="subject.errors.required">
+                Subject is required
+            </div>
+        </div>
+        <label for="subject">Subject</label>
+    </div>
+
+    <div class="md-form">
+        <i class="fa fa-pencil prefix grey-text"></i>
+        <textarea [(ngModel)]="ticket.description" type="text" id="form8" class="md-textarea" style="height: 100px" mdbActive></textarea>
+        <label for="form8">Details of your need</label>
+    </div>
+
+    <div class="text-center">
+        <button (click)="onClickCreateTicket()" class="btn btn-unique waves-light" mdbRippleRadius>Save <i class="fa fa-paper-plane-o ml-1"></i></button>
+    </div>
+</div>        
