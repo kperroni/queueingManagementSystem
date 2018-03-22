@@ -4,6 +4,7 @@ var User = require('mongoose').model('User');
 
 exports.createTicket = function (req, res, next) {
     console.log("Ticket Controller");
+    console.log(req.user.id);
 
     /*
     console.log("locals.user", req.locals.user);
