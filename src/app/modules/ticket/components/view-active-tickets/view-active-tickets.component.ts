@@ -13,10 +13,11 @@ export class ViewActiveTicketsComponent implements OnInit {
   constructor(private ticketService: TicketService) { }
 
   ngOnInit() {
+    this.ticketService.getActiveTickets().subscribe(
+      (data: any) => {
+        this.activeTickets = data;
+      },
+      err => { console.error(err); }
+    );
   }
-
-  getActiveTickets(body){
-    this.activeTickets = this.ticketService.getActiveTickets(body);
-   } 
-
 }
