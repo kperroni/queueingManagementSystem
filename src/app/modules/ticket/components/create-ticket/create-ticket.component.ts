@@ -46,7 +46,6 @@ export class CreateTicketComponent implements OnInit {
   }
   
   onClickCreateTicket(){
-    this.ticket.userId = "5aaae408635549a46d59a051";
     this.ticketService.createTicket(this.ticket)
       .subscribe(
         (data: any) => {
@@ -58,8 +57,10 @@ export class CreateTicketComponent implements OnInit {
               break;
             }
             case '1': {
-              this.router.navigate(['/home']);
+              console.log("message = 1");
+              this.message.clearMessage();
               this.message.setMessage('success', 'Qme', 'The ticket number ' + creationResult.ticketNumber + ' was successfully created!');
+              this.router.navigate(['/home']);
               break;
             }
           }

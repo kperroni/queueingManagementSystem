@@ -23,7 +23,7 @@ var TicketSchema = new Schema({
         type: Schema.Types.ObjectId,
         Ref: 'Student'
     },
-    guessId: {
+    guestId: {
         type: Schema.Types.ObjectId,
         Ref: 'Guest'
     },    
