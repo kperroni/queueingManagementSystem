@@ -14,4 +14,7 @@ export class TicketService {
     return this.http.get('ticket/getCurrentTicket', body);
   }
 
+  getActiveTickets(){
+    return this.http.get('/getActiveTickets');
+  }
 }

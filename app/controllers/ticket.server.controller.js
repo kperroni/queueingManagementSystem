@@ -47,3 +47,16 @@ exports.getCurrentTicket = function (req, res, next) {
         }
     });
 };
+
+exports.viewActiveTickets = function (req, res, next) {
+    console.log("Ticket Controller");
+    
+    // Use the 'User' instance's 'find' method to retrieve a new user document
+    Ticket.find({}, function (err, users) {
+        if (err) {
+            return next(err);
+        } else {
+            res.json(users);
+        }
+    });
+};
