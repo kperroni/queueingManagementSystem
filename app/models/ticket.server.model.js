@@ -23,7 +23,7 @@ var TicketSchema = new Schema({
         type: Schema.Types.ObjectId,
         Ref: 'Student'
     },
-    guessId: {
+    guestId: {
         type: Schema.Types.ObjectId,
         Ref: 'Guest'
     },    
@@ -31,15 +31,21 @@ var TicketSchema = new Schema({
         type: Number,
     },
     status: {
-        type: String // A = Active, S = Skiped, D = Done, C = Cancel
+        type: String, // A = Active, S = Skiped, D = Done, C = Cancel
+        default: 'A'
     },
     userId: {
         type: Schema.Types.ObjectId,
         Ref: 'User'
     },
     creationTime: {
-        type: Date
+        type: Date,
+        default: Date.now
     },    
 });
+
+TicketSchema.statics.findMax = function (callback) {
+    this.findOne().sort('-ticketNumber').exec(callback);
+}
 
 mongoose.model('Ticket', TicketSchema);
