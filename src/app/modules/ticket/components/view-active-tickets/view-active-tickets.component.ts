@@ -8,7 +8,7 @@ import { TicketService } from '../../ticket.service';
 })
 export class ViewActiveTicketsComponent implements OnInit {
 
-  //private activeTickets : [];
+  private activeTickets : any;
 
   constructor(private ticketService: TicketService) { }
 
@@ -16,7 +16,7 @@ export class ViewActiveTicketsComponent implements OnInit {
   }
 
   getActiveTickets(body){
-    this.ticketService.getActiveTickets(body);
+    this.activeTickets = this.ticketService.getActiveTickets(body);
    } 
 
 }

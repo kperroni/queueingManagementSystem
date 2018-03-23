@@ -1,3 +1,19 @@
-<p>
-  view-active-tickets works!
-</p>
+<div class="container">
+  <h1>Active Tickets in Queue</h1>
+  <hr>
+
+  <table>
+    <tr>
+      <th>Ticket Number</th>
+      <th>Student Number</th>
+      <th>Subject</th>
+      <th>Description</th>
+    </tr>
+    <tr ng-repeat="ticket in activeTickets">
+      <td>{{ ticket.ticketNumber }}</td>
+      <td>{{ ticket.studentId }}</td>
+      <td>{{ ticket.subject }}</td>
+      <td>{{ ticket.description }}</td>
+    </tr>
+  </table>
+</div>

@@ -24,7 +24,7 @@ exports.viewActiveTickets = function (req, res, next) {
     
     console.log("controller", "getUsers");
     // Use the 'User' instance's 'find' method to retrieve a new user document
-    Ticket.find({status : "Active"}, function (err, users) {
+    Ticket.find({}, function (err, users) {
         if (err) {
             return next(err);
         } else {
