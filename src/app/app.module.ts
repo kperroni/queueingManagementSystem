@@ -17,6 +17,7 @@ import { AboutComponent } from './modules/misc/components/about/about.component'
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './modules/login/components/login.component';
 import { CreateTicketComponent } from './modules/ticket/components/create-ticket/create-ticket.component';
+import { ViewActiveTicketsComponent } from './modules/ticket/components/view-active-tickets/view-active-tickets.component';
 import { AppSessionService } from './shared/services/session/session.service';
 import { MessageService } from './shared/services/messages/message.service';
 
@@ -26,9 +27,9 @@ const appRoutes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
   { path: 'createTicket', component: CreateTicketComponent },
+  { path: 'viewActiveTickets', component: ViewActiveTicketsComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
-
 ]
 
 @NgModule({
@@ -39,7 +40,8 @@ const appRoutes: Routes = [
     HomeComponent,
     AboutComponent,
     LoginComponent,
-    CreateTicketComponent
+    CreateTicketComponent,
+    ViewActiveTicketsComponent
   ],
   imports: [
     BrowserModule,
