@@ -10,4 +10,8 @@ export class TicketService {
     return this.http.post('ticket/createTicket', body);
   }
 
+  getCurrentActiveTicket(body){
+    return this.http.get('ticket/getCurrentTicket', body);
+  }
+
 }
