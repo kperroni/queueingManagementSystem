@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { UserService } from '../../user/user.service';
-import { AppSessionService } from '../../../shared/services/session/session.service';
 import { MessageService } from '../../../shared/services/messages/message.service';
 import { ToasterService } from 'angular5-toaster';
 
@@ -15,12 +14,12 @@ export class LoginComponent implements OnInit {
   username: String;
   password: String;
 
-  constructor(private UserService: UserService, private session: AppSessionService, private router: Router, private message: MessageService, private toaster: ToasterService) { }
+  constructor(private UserService: UserService, private router: Router, private message: MessageService, private toaster: ToasterService) { }
 
   ngOnInit() {
   }
 
-  logIn() {
+  onLogIn() {
     this.UserService.logIn({ username: this.username, password: this.password })
       .subscribe(
         (data: any) => {
@@ -31,8 +30,8 @@ export class LoginComponent implements OnInit {
               break;
             }
             case '1': {
-              this.session.setSessionToken(loginResult[1]);
-              this.router.navigate(['/home']);
+              //this.router.navigate(['home']);
+              window.location.href = "/home";
               this.message.setMessage('success', 'Qme', 'Welcome! ' +loginResult[1].firstName);
               break;
             }

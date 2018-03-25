@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../modules/user/user.service';
-import { AppSessionService } from '../../../services/session/session.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-header',
@@ -10,16 +10,17 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private UserService: UserService, private session: AppSessionService, private router: Router) { }
+  user: Observable<any>;
+  constructor(private UserService: UserService, private router: Router) { }
 
   ngOnInit() {
+      this.user =this.UserService.getUserSession();
   }
 
-  logOut(){
+  onLogOut(){
     this.UserService.logOut().subscribe( 
       (data:any) => {
         if(data.message = 1){
-          this.session.destroySessionToken();
           this.router.navigate(['/home']);
         }       
         else{

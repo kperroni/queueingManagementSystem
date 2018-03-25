@@ -24,4 +24,8 @@ export class UserService {
   logOut(){
     return this.http.get('user/logOut');
   }
+
+  getUserSession() {
+    return this.http.get('user/getUserSession');
+  }
 }
