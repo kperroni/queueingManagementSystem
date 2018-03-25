@@ -7,7 +7,10 @@ export class TicketService {
   constructor(private http: HttpClient) { }
 
   createTicket(body){
-    return this.http.post('/insertTicket', body);
+    return this.http.post('ticket/createTicket', body);
   }
 
+  getActiveTickets(){
+    return this.http.get('/getActiveTickets');
+  }
 }
