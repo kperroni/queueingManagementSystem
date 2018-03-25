@@ -19,7 +19,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './modules/login/components/login.component';
 import { CreateTicketComponent } from './modules/ticket/components/create-ticket/create-ticket.component';
 import { ViewActiveTicketsComponent } from './modules/ticket/components/view-active-tickets/view-active-tickets.component';
-import { AppSessionService } from './shared/services/session/session.service';
 import { MessageService } from './shared/services/messages/message.service';
 import { CurrentTicketComponent } from './modules/ticket/components/current-ticket/current-ticket.component';
 
@@ -59,7 +58,6 @@ const appRoutes: Routes = [
   providers: [
     UserService, 
     TicketService, 
-    AppSessionService,
     ServiceService, 
     MessageService
   ],

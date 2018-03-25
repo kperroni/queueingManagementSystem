@@ -65,7 +65,7 @@ module.exports = function () {
     require('../routes/index.server.routes')(app);
 
     // Configure static file serving
-    app.use(express.static('./public'));
+    //app.use(express.static('./public'));
 
     // Return the Express application instance
     return app;

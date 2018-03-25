@@ -4,11 +4,8 @@ const passport = require('passport');
 
 exports.createUser = function (req, res, next) {
 
-    //if(!req.user){
-
     // Create a new instance of the 'User' Mongoose model
     var user = new User(req.body);
-    console.log("body: " + req.body.username);
     console.log(req.body);
 
     // Use the 'User' instance's 'save' method to save a new user document
@@ -28,15 +25,10 @@ exports.createUser = function (req, res, next) {
             // Use the 'response' object to send a JSON response
         }
     });
-    //}
-    /*else {
-        res.json({message:"Error"});
-    }*/
 };
 
 // Create a new 'getUsers' controller method
 exports.getUsers = function (req, res, next) {
-    console.log("controller", "getUsers");
     // Use the 'User' instance's 'find' method to retrieve a new user document
     User.find({}, function (err, users) {
         if (err) {
@@ -47,32 +39,29 @@ exports.getUsers = function (req, res, next) {
     });
 };
 
-// login controller method
-exports.login = function (req, res, next) {
-    console.log("controller", "login");
-    console.log("username", req.body.username);
-    if (req.body.username && req.body.password) {
-        User.findByUsername(req.body.username, function (err, retobj) {
-            if (retobj) {
-                if (retobj.password === req.body.password) {
-                    req.session.user = req.body.username;
-                    req.locals.user = req.body.username;
-                    req.session.login = 'ok';
-                    console.log("login success");
-                    res.send({ login: true });
-                } else {
-                    // req.session.reset();
-                    res.json({ login: false });
-                }
-            } else {
-                res.json({ login: false });
-            }
-        });
-    }
+exports.logIn = function (req, res, next) {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) { return next(err); }
+        if (!user) { res.json([{ message: "0" }]); }
+        else {
+            req.logIn(user, function (err) {
+                if (err) { return next(err); }
+                res.json([{ message: "1" }, { id: user._id, username: user.username, firstName: user.firstName }]);
+            });
+        }
+    })(req, res, next);
 }
 
-// logoff controller method
-exports.logout = function (req, res, next) {
-    req.session.reset();
-    next();
+exports.logOut = function (req, res, next) {
+    req.logout();
+    res.json({message:"1"});
+}
+
+exports.getUserSession = function (req, res, next){
+    if(req.user){
+        res.json(req.user);
+    }
+    else{
+        res.json(null);
+    }
 }
