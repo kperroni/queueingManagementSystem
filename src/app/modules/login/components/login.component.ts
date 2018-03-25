@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from "@angular/router";
 import { UserService } from '../../user/user.service';
 import { MessageService } from '../../../shared/services/messages/message.service';
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   username: String;
   password: String;
 
-  constructor(private UserService: UserService, private router: Router, private message: MessageService, private toaster: ToasterService) { }
+  constructor(private ngZone: NgZone, private UserService: UserService, private router: Router, private message: MessageService, private toaster: ToasterService) { }
 
   ngOnInit() {
   }
@@ -30,9 +30,9 @@ export class LoginComponent implements OnInit {
               break;
             }
             case '1': {
-              //this.router.navigate(['home']);
-              window.location.href = "/home";
+              this.ngZone.run(() => this.router.navigate(['/home']))         
               this.message.setMessage('success', 'Qme', 'Welcome! ' +loginResult[1].firstName);
+              //window.location.href = "home";
               break;
             }
           }
