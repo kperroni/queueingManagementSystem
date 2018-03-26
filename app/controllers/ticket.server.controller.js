@@ -39,7 +39,28 @@ exports.createTicket = function (req, res, next) {
 };
 
 exports.getCurrentTicket = function (req, res, next) {
+    if (req.user.type != null) {
+        console.log("req.user.type", req.user.type);
+    }
     Ticket.find({ "status": 'A' }).sort("ticketNumber").limit(1).exec(function (err, retobj) {
+        const ret = {};
+        if (err) {
+            return res.json({ message: "0", err: err });
+        } else {
+            if(req.user.type == 'E')
+            {
+            res.json({ message: "1", ticket: retobj, userType: req.user.type });
+            }
+            else{
+                res.json({ message: "1", ticket: ret, userType: req.user.type });
+            }
+        }
+    });
+};
+
+exports.updateCurrentTicket = function (req, res, next) {
+    const ret = {};
+    Ticket.findOneAndUpdate({ "ticketNumber": req.body.ticketNumber }, req.body, { new: true }, function (err, retobj) {
         if (err) {
             return res.json({ message: "0", err: err });
         } else {
@@ -50,9 +71,9 @@ exports.getCurrentTicket = function (req, res, next) {
 
 exports.viewActiveTickets = function (req, res, next) {
     console.log("Ticket Controller");
-    
+
     // Use the 'User' instance's 'find' method to retrieve a new user document
-    Ticket.find({}, function (err, users) {
+    Ticket.find({ "status": 'A' }, function (err, users) {
         if (err) {
             return next(err);
         } else {

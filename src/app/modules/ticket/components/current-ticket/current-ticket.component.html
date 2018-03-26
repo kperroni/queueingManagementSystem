@@ -1,3 +1,35 @@
-<p>
-  current-ticket works!
-</p>
+<div class="container">
+  <form action="ticket/updateCurrentTicket" *ngIf="currentTicket; else noActiveTickets" method="POST">
+    <p class="h4 text-center mb-4">Resolve Ticket</p>
+
+    <label for="ticketNumber" class="grey-text">Ticket Number</label>
+    <input type="text" name="ticketNumber" class="form-control" value="{{ currentTicket.ticketNumber }}" disabled>
+    <br>
+    <label for="status" class="black-text">Ticket Status</label>
+    <select [(ngModel)]="currentTicket.status" class="mdb-select" name="status">
+      <option value="A" selected>Active</option>
+      <option value="S">Skipped</option>
+      <option value="D">Done/Completed</option>
+    </select>
+    <br>
+    <br>
+    <label for="serviceId" class="grey-text">Service</label>
+    <input type="text" name="serviceId" class="form-control" value="{{ currentTicket.serviceId }}" disabled>
+    <br>
+    <label for="userId" class="grey-text">Submitted by</label>
+    <input type="text" name="userId" class="form-control" value="{{ currentTicket.userId }}" disabled>
+    <br>
+    <label for="subject" class="grey-text">Subject</label>
+    <input type="text" name="subject" class="form-control" value="{{ currentTicket.subject }}" disabled>
+    <br>
+    <label for="description" class="black-text">Ticket Description</label>
+    <textarea [(ngModel)]="currentTicket.description" name="description" class="form-control" rows="4">{{ currentTicket.description }}</textarea>
+    <br>
+
+    <div class="text-center mt-4">
+      <button (click)="onClickUpdateTicket()" class="btn btn-unique">Update Ticket</button>
+    </div>
+  </form>
+  <ng-template #noActiveTickets><ng-container *ngIf="userType == 'E'; else permissionDenied">There are no active tickets in the system.</ng-container></ng-template>
+  <ng-template #permissionDenied>You must be an employee to see this page.</ng-template>
+</div>

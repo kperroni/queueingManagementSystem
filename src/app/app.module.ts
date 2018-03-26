@@ -28,6 +28,7 @@ const appRoutes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
   { path: 'createTicket', component: CreateTicketComponent },
+  { path: 'getCurrentTicket', component: CurrentTicketComponent },
   { path: 'viewActiveTickets', component: ViewActiveTicketsComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }

@@ -46,7 +46,8 @@ exports.logIn = function (req, res, next) {
         else {
             req.logIn(user, function (err) {
                 if (err) { return next(err); }
-                res.json([{ message: "1" }, { id: user._id, username: user.username, firstName: user.firstName }]);
+                console.log(user);
+                res.json([{ message: "1" }, { id: user._id, username: user.username, firstName: user.firstName, type: user.type }]);
             });
         }
     })(req, res, next);
