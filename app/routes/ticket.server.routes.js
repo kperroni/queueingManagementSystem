@@ -5,4 +5,6 @@ module.exports = function (app) {
     app.post('/ticket/createTicket', ticketController.createTicket);
 
     app.get('/getActiveTickets', ticketController.viewActiveTickets);
+
+    app.get('/getActiveTickets', ticketController.viewStudentTickets);
 };
