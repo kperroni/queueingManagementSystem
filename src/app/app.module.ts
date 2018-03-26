@@ -30,7 +30,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'createTicket', component: CreateTicketComponent },
   { path: 'viewActiveTickets', component: ViewActiveTicketsComponent },
-  { path: 'viewStudentTickets', component: ViewStudentTicketComponent },
+  { path: 'viewStudentTicket', component: ViewStudentTicketComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ]

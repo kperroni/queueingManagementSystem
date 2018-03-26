@@ -6,5 +6,5 @@ module.exports = function (app) {
 
     app.get('/getActiveTickets', ticketController.viewActiveTickets);
 
-    app.get('/getActiveTickets', ticketController.viewStudentTickets);
+    app.get('/getStudentTicket', ticketController.viewStudentTicket);
 };
