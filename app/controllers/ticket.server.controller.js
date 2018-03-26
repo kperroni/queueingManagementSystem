@@ -55,7 +55,7 @@ exports.viewStudentTicket = function (req, res, next) {
     console.log("Ticket Controller");
     
     // Use the 'User' instance's 'find' method to retrieve a new user document
-    Ticket.find({'status':'A'}, function (err, users) {
+    Ticket.find({status:'A'}, function (err, user) {
         if (err) {
             return next(err);
         } else {
