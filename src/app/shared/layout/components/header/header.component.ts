@@ -1,7 +1,9 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../modules/user/user.service';
-import { Router, Event, NavigationStart } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { MessageService } from '../../../services/messages/message.service';
+import { ToasterService } from 'angular5-toaster/angular5-toaster';
 
 @Component({
   selector: 'app-header',
@@ -11,10 +13,10 @@ import { Observable } from 'rxjs/Observable';
 export class HeaderComponent implements OnInit {
 
   user: Observable<any>;
-  constructor(private UserService: UserService, private router: Router) {
+  constructor(private UserService: UserService, private router: Router, private toaster: ToasterService) {
     router.events.subscribe(event => {
       if(event instanceof NavigationStart) {
-        this.user =this.UserService.getUserSession();
+        this.user = this.UserService.getUserSession();
       }
       // NavigationEnd
       // NavigationCancel
@@ -31,16 +33,13 @@ export class HeaderComponent implements OnInit {
     this.UserService.logOut().subscribe( 
       (data:any) => {
         if(data.message == 1){
-          window.location.href = "/home";
+          this.toaster.pop('success', 'Qme', 'You have successfully logged out');
+          this.user = this.UserService.getUserSession();
         }       
         else{
           console.log("Something went wrong when logging out");
         }  
       }
     );
-  }
-
-  ngAfterViewInit() {
-    
   }
 }

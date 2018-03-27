@@ -42,11 +42,11 @@ exports.getUsers = function (req, res, next) {
 exports.logIn = function (req, res, next) {
     passport.authenticate('local', (err, user, info) => {
         if (err) { return next(err); }
-        if (!user) { res.json([{ message: "0" }]); }
+        if (!user) { res.json({ message: "0" }); }
         else {
             req.logIn(user, function (err) {
                 if (err) { return next(err); }
-                res.json([{ message: "1" }, { id: user._id, username: user.username, firstName: user.firstName }]);
+                res.json({ message: "1" });
             });
         }
     })(req, res, next);
@@ -65,3 +65,22 @@ exports.getUserSession = function (req, res, next){
         res.json(null);
     }
 }
+
+exports.requiresLogin = function (req, res, next) {
+    if (!req.isAuthenticated()) {
+        return res.status(401).json({
+            message: 'User is not logged in'
+        });
+    }
+};
+
+// This function should be inside a controller that defines a function with authorization
+// e.g when deleting a ticket
+// For the mean time, it will be here. Later on, it will implemented correctly
+exports.hasAuthorization = function (req, res, next) {
+    if (req.ticket.userId !== req.user._id) {
+        return res.status(403).json({
+            message: 'User is not authorized'
+        });
+    }
+};
