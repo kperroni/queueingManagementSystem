@@ -4,16 +4,16 @@ var StudentModel = require('mongoose').model('Student');
 exports.createStudent = function (req, res, next) {
 
     // Create a new instance of the 'Student' Mongoose model
-    var Student = new StudentModel(req.body);
+    var student = new StudentModel(req.body);
     console.log("body: " + req.body);
     // Use the 'Student' instance's 'save' method to save a new Student document
-    Student.save(function (err) {
+    student.save(function (err) {
         if (err) {
             // Call the next middleware with an error message
             return next(err);
         } else {
             // Use the 'response' object to send a JSON response
-            res.json(Student);
+            res.json(student);
 
         }
     });
@@ -23,11 +23,33 @@ exports.createStudent = function (req, res, next) {
 exports.getStudents = function (req, res, next) {
     console.log("controller", "getStudents");
     // Use the 'student' instance's 'find' method to retrieve a new student document
-    Student.find({}, function (err, Students) {
+    StudentModel.find({}, function (err, students) {
         if (err) {
             return next(err);
         } else {
-            res.json(Students);
+            res.json(students);
+        }
+    });
+};
+
+exports.getStudentByUserId = function (req, res, next) {
+    console.log("controller", "req.body", req.body);
+    StudentModel.findOne({userId:req.body.userId}, function (err, student) {
+        if (err) {
+            return next(err);
+        } else {
+            res.json(student);
+        }
+    });
+};
+
+exports.getStudentByStudentNumber = function (req, res, next) {
+    console.log("controller", "req.body", req.body);
+    StudentModel.findOne({studentNumber:req.body.studentNumber}, function (err, student) {
+        if (err) {
+            return next(err);
+        } else {
+            res.json(student);
         }
     });
 };
