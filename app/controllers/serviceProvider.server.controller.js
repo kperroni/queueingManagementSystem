@@ -1,4 +1,4 @@
-var ServiceProviderModel = require('mongoose').model('serviceProvider');
+var ServiceProviderModel = require('mongoose').model('ServiceProvider');
 
 exports.createServiceProvider = function (req, res, next) {
 
