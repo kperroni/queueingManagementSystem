@@ -8,8 +8,7 @@ exports.createUser = function (req, res, next) {
 
     // Create a new instance of the 'User' Mongoose model
     var user = new User(req.body);
-    console.log("body: " + req.body.username);
-    console.log(req.body);
+    console.log("body: ", req.body);
 
     // Use the 'User' instance's 'save' method to save a new user document
     user.save(function (err) {
@@ -76,3 +75,28 @@ exports.logout = function (req, res, next) {
     req.session.reset();
     next();
 }
+
+// Create a new 'getActiveUser' controller method
+exports.getActiveUser = function (req, res, next) {
+    console.log("controller", "getActiveUser", req.user.id);
+    User.findOne({_id:req.user.id}, function (err, user) {
+        if (err) {
+            return next(err);
+        } else {
+            console.log("ActiveUser", user);
+            res.json(user);
+        }
+    });
+};
+
+exports.getUserById = function (req, res, next) {
+    console.log("controller", "getUserById", req.body);
+    User.findOne({_id:req.body._id}, function (err, user) {
+        if (err) {
+            return next(err);
+        } else {
+            res.json(user);
+        }
+    });
+};
+
