@@ -13,6 +13,9 @@ module.exports = function () {
     require('../models/service.server.model');
     require('../models/guest.server.model');
     require('../models/student.server.model');
+    require('../models/shift.server.model');
+    require('../models/counter.server.model');
+    require('../models/serviceProvider.server.model');
     // Return the Mongoose connection instance
     return db;
 };

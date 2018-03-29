@@ -21,6 +21,7 @@ import { CreateTicketComponent } from './modules/ticket/components/create-ticket
 import { ViewActiveTicketsComponent } from './modules/ticket/components/view-active-tickets/view-active-tickets.component';
 import { AppSessionService } from './shared/services/session/session.service';
 import { MessageService } from './shared/services/messages/message.service';
+import { StudentService } from './modules/student/student.service';
 
 const appRoutes: Routes = [
 
@@ -59,6 +60,7 @@ const appRoutes: Routes = [
     TicketService, 
     AppSessionService,
     ServiceService, 
+    StudentService,
     MessageService
   ],
   bootstrap: [AppComponent]
