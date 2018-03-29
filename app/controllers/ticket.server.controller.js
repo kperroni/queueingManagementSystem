@@ -69,3 +69,18 @@ exports.viewActiveTickets = function (req, res, next) {
         }
     });
 };
+
+exports.getPrecedingTickets = function (req, res, next) {
+    console.log("Ticket Controller");
+    
+    //get user ticket
+    // get all active tickets created before above tickets
+    
+    Ticket.find({}, function (err, users) {
+        if (err) {
+            return next(err);
+        } else {
+            res.json(users);
+        }
+    });
+};

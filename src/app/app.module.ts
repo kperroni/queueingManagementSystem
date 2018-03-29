@@ -22,6 +22,7 @@ import { ViewActiveTicketsComponent } from './modules/ticket/components/view-act
 import { AppSessionService } from './shared/services/session/session.service';
 import { MessageService } from './shared/services/messages/message.service';
 import { StudentService } from './modules/student/student.service';
+import { ViewPrecedingTicketsComponent } from './modules/ticket/components/view-preceding-tickets/view-preceding-tickets.component';
 
 const appRoutes: Routes = [
 
@@ -43,7 +44,8 @@ const appRoutes: Routes = [
     AboutComponent,
     LoginComponent,
     CreateTicketComponent,
-    ViewActiveTicketsComponent
+    ViewActiveTicketsComponent,
+    ViewPrecedingTicketsComponent
   ],
   imports: [
     BrowserModule,
