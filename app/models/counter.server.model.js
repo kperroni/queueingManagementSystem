@@ -2,7 +2,7 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 // Define a new 'UserSchema'
-var QueueSchema = new Schema({
+var CounterSchema = new Schema({
     counterName: {
         type: String,
         required: true,
@@ -15,4 +15,4 @@ var QueueSchema = new Schema({
     },
 });
 
-mongoose.model('Queue', QueueSchema);
+mongoose.model('Counter', CounterSchema);

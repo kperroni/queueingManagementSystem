@@ -4,11 +4,9 @@ const passport = require('passport');
 
 exports.createUser = function (req, res, next) {
 
-    //if(!req.user){
-
     // Create a new instance of the 'User' Mongoose model
     var user = new User(req.body);
-    console.log("body: ", req.body);
+    console.log(req.body);
 
     // Use the 'User' instance's 'save' method to save a new user document
     user.save(function (err) {
@@ -27,15 +25,10 @@ exports.createUser = function (req, res, next) {
             // Use the 'response' object to send a JSON response
         }
     });
-    //}
-    /*else {
-        res.json({message:"Error"});
-    }*/
 };
 
 // Create a new 'getUsers' controller method
 exports.getUsers = function (req, res, next) {
-    console.log("controller", "getUsers");
     // Use the 'User' instance's 'find' method to retrieve a new user document
     User.find({}, function (err, users) {
         if (err) {
@@ -46,34 +39,31 @@ exports.getUsers = function (req, res, next) {
     });
 };
 
-// login controller method
-exports.login = function (req, res, next) {
-    console.log("controller", "login");
-    console.log("username", req.body.username);
-    if (req.body.username && req.body.password) {
-        User.findByUsername(req.body.username, function (err, retobj) {
-            if (retobj) {
-                if (retobj.password === req.body.password) {
-                    req.session.user = req.body.username;
-                    req.locals.user = req.body.username;
-                    req.session.login = 'ok';
-                    console.log("login success");
-                    res.send({ login: true });
-                } else {
-                    // req.session.reset();
-                    res.json({ login: false });
-                }
-            } else {
-                res.json({ login: false });
-            }
-        });
-    }
+exports.logIn = function (req, res, next) {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) { return next(err); }
+        if (!user) { res.json({ message: "0" }); }
+        else {
+            req.logIn(user, function (err) {
+                if (err) { return next(err); }
+                res.json({ message: "1" });
+            });
+        }
+    })(req, res, next);
 }
 
-// logoff controller method
-exports.logout = function (req, res, next) {
-    req.session.reset();
-    next();
+exports.logOut = function (req, res, next) {
+    req.logout();
+    res.json({message:"1"});
+}
+
+exports.getUserSession = function (req, res, next){
+    if(req.user){
+        res.json(req.user);
+    }
+    else{
+        res.json(null);
+    }
 }
 
 // Create a new 'getActiveUser' controller method
@@ -100,3 +90,21 @@ exports.getUserById = function (req, res, next) {
     });
 };
 
+exports.requiresLogin = function (req, res, next) {
+    if (!req.isAuthenticated()) {
+        return res.status(401).json({
+            message: 'User is not logged in'
+        });
+    }
+};
+
+// This function should be inside a controller that defines a function with authorization
+// e.g when deleting a ticket
+// For the mean time, it will be here. Later on, it will implemented correctly
+exports.hasAuthorization = function (req, res, next) {
+    if (req.ticket.userId !== req.user._id) {
+        return res.status(403).json({
+            message: 'User is not authorized'
+        });
+    }
+};
