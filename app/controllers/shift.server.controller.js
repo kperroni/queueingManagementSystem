@@ -1,4 +1,4 @@
-var ShiftModel = require('mongoose').model('shift');
+var ShiftModel = require('mongoose').model('Shift');
 
 exports.createShift = function (req, res, next) {
 
