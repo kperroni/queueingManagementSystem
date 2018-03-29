@@ -1,39 +1,58 @@
 // Load the 'Ticket' Mongoose model
 var Ticket = require('mongoose').model('Ticket');
 var User = require('mongoose').model('User');
+var Guest = require('mongoose').model('Guest');
 
 exports.createTicket = function (req, res, next) {
     console.log("Ticket Controller");
-
-    if (req.user.id == null) {
-        return res.json({ message: "0", err: "you must login first" });
+    
+    // verify it the user is logged in
+    if(req.user.id == null) {
+        return res.json({message:"0", err:"you must login first"});
+        console.log("req.user.id", req.user.id);
     }
-    console.log("req.user.id", req.user.id);
 
-    // Create a new instance of the 'Ticket' Mongoose model
-    Ticket.findMax(function (err, ret) {
+    Ticket.findMax(function(err, ret) {     // get the maximum number of ticket
         if (err) {
             return res.json({ message: "0", err: err });
         } else {
-            if (ret) {
-                req.body.ticketNumber = ret.ticketNumber + 1; // next ticket
+            if(ret) {
+                req.body.ticket.ticketNumber = ret.ticketNumber + 1; // next ticket
             } else {
-                req.body.ticketNumber = 1; // first ticket
+                req.body.ticket.ticketNumber = 1;   // first ticket
             }
 
-            req.body.userId = req.user.id;
-            req.body.weight = 1;    // temporarily a fix value
-
-            var ticket = new Ticket(req.body);
-            console.log("body: ", req.body);
-            // Use the 'Ticket' instance's 'save' method to save a new user document
-            ticket.save(function (err) {
-                if (err) {
-                    return res.json({ message: "0", err: err });
-                } else {
-                    res.json({ message: "1", ticketNumber: req.body.ticketNumber });
-                }
-            });
+            req.body.ticket.userId = req.user.id;   // set the loged user id
+            req.body.ticket.weight = 1;             // temporarily a fix value
+            
+            if(req.body.guest != null) { // if we need to inser fisrt the guest
+                var guest = new Guest(req.body.guest);
+                guest.save(function(err, ret) { // save the new guest
+                    if (err) {
+                        return res.json({message:"0", err:err});
+                    } else {
+                        console.log("guest", ret);
+                        req.body.ticket.guestId = ret._id;      // set the guest id in the ticket
+                        var ticket = new Ticket(req.body.ticket);
+                        ticket.save(function (err) {                        // save the ticket after the guest
+                            if (err) {
+                                return res.json({message:"0", err:err});
+                            } else {
+                                res.json({message:"1", ticketNumber:req.body.ticket.ticketNumber});
+                            }
+                        });        
+                    }
+                });
+            } else {
+                var ticket = new Ticket(req.body.ticket);
+                ticket.save(function (err) {                        // save the ticket without any guest
+                    if (err) {
+                        return res.json({message:"0", err:err});
+                    } else {
+                        res.json({message:"1", ticketNumber:req.body.ticket.ticketNumber});
+                    }
+                });
+            }
         }
     });
 };

@@ -15,10 +15,21 @@ export class UserService {
     return this.http.get('user/getUsers');
   }
 
+  getActiveUser()
+  {
+    return this.http.get('user/getActiveUser');
+  }
+
+
   logIn(body)
   {
     return this.http.post('user/logIn', body);
 
+  }
+
+  getUserById(body)
+  {
+    return this.http.post('user/getUserById', body);
   }
 
   logOut(){

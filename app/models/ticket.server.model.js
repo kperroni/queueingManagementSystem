@@ -1,7 +1,24 @@
 // Load the Mongoose module and Schema object
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
-// Define a new 'UserSchema'
+
+var TicketDetailSchema = new Schema({
+    shiftId: {
+        type: Schema.Types.ObjectId,
+        ref: 'shift',
+        required: true
+    },
+    actions: {
+        type: String,
+        required: true
+    },
+    actionTime: {
+        type: Date,
+        default: Date.now,
+        required: true
+    }
+});
+
 var TicketSchema = new Schema({
     ticketNumber: {
         type: Number,
@@ -41,7 +58,8 @@ var TicketSchema = new Schema({
     creationTime: {
         type: Date,
         default: Date.now
-    },    
+    },
+    details: [TicketDetailSchema]    
 });
 
 TicketSchema.statics.findMax = function (callback) {

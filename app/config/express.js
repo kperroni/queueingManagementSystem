@@ -60,6 +60,9 @@ module.exports = function () {
     require('../routes/service.server.routes')(app);
     require('../routes/guest.server.routes')(app);
     require('../routes/student.server.routes')(app);
+    require('../routes/shift.server.routes')(app);
+    require('../routes/counter.server.routes')(app);
+    require('../routes/serviceProvider.server.routes')(app);
     
     // most be the last one
     require('../routes/index.server.routes')(app);

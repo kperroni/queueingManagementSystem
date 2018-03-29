@@ -20,6 +20,7 @@ var UserSchema = new Schema({
     },
     type: {
         type: String,
+        uppercase: true,   // S = student, E, Employee
     },
     email: {
         type: String,
