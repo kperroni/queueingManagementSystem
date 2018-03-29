@@ -21,11 +21,8 @@ import { CreateTicketComponent } from './modules/ticket/components/create-ticket
 import { ViewActiveTicketsComponent } from './modules/ticket/components/view-active-tickets/view-active-tickets.component';
 import { AppSessionService } from './shared/services/session/session.service';
 import { MessageService } from './shared/services/messages/message.service';
-<<<<<<< HEAD
 import { ViewStudentTicketComponent } from './modules/ticket/components/view-student-ticket/view-student-ticket.component';
-=======
 import { StudentService } from './modules/student/student.service';
->>>>>>> refs/remotes/origin/master
 
 const appRoutes: Routes = [
 
