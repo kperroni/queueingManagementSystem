@@ -3,8 +3,10 @@ module.exports = function (app) {
     var ticketController = require('../controllers/ticket.server.controller');
     //handle the routing of get and post request
     app.post('/ticket/createTicket', ticketController.createTicket);
+    
+    app.get('/ticket/getCurrentTicket', ticketController.getCurrentTicket);
 
-    app.get('/ticket/getActiveTickets', ticketController.viewActiveTickets);
-
-    app.post('/ticket/getPrecedingTickets',ticketController.getPrecedingTickets);
+    app.get('ticket/getActiveTickets', ticketController.viewActiveTickets);
+    
+    app.post('/ticket/updateCurrentTicket', ticketController.updateCurrentTicket);
 };

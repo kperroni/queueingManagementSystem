@@ -20,6 +20,7 @@ import { LoginComponent } from './modules/login/components/login.component';
 import { CreateTicketComponent } from './modules/ticket/components/create-ticket/create-ticket.component';
 import { ViewActiveTicketsComponent } from './modules/ticket/components/view-active-tickets/view-active-tickets.component';
 import { MessageService } from './shared/services/messages/message.service';
+import { CurrentTicketComponent } from './modules/ticket/components/current-ticket/current-ticket.component';
 import { StudentService } from './modules/student/student.service';
 import { ViewPrecedingTicketsComponent } from './modules/ticket/components/view-preceding-tickets/view-preceding-tickets.component';
 
@@ -29,7 +30,9 @@ const appRoutes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
   { path: 'createTicket', component: CreateTicketComponent },
-  { path: 'viewActiveTickets', component: ViewActiveTicketsComponent },
+  { path: 'getCurrentTicket', component: CurrentTicketComponent },
+  { path: 'viewActiveTickets', component: ViewActiveTicketsComponent },  
+  { path: 'viewPrecedingTickets', component: ViewPrecedingTicketsComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ]
@@ -43,6 +46,7 @@ const appRoutes: Routes = [
     AboutComponent,
     LoginComponent,
     CreateTicketComponent,
+    CurrentTicketComponent,
     ViewActiveTicketsComponent,
     ViewPrecedingTicketsComponent
   ],
