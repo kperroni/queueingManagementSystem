@@ -4,5 +4,7 @@ module.exports = function (app) {
     //handle the routing of get and post request
     app.post('/ticket/createTicket', ticketController.createTicket);
 
-    app.get('/getActiveTickets', ticketController.viewActiveTickets);
+    app.get('/ticket/getActiveTickets', ticketController.viewActiveTickets);
+
+    app.post('/ticket/getPrecedingTickets',ticketController.getPrecedingTickets);
 };

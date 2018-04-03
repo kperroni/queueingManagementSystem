@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TicketService } from '../../ticket.service';
+import { UserService } from '../../../user/user.service';
 
 @Component({
   selector: 'app-view-preceding-tickets',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewPrecedingTicketsComponent implements OnInit {
 
-  constructor() { }
+  private precedingTickets : any;
+  private activeStudent : any;
+
+  constructor(private ticketService: TicketService,
+    private userService: UserService) { }
 
   ngOnInit() {
+
+    this.activeStudent = this.userService.getActiveUser();
+
+    this.activeStudent = this.activeStudent.type == 'S'? this.activeStudent : null;
+
+
+    this.ticketService.getPrecedingTickets().subscribe(
+      (data: any) => {
+        this.precedingTickets = data;
+      },
+      err => { console.error(err); }
+    );
   }
 
 }

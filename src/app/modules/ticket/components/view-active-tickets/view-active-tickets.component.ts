@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from '../../ticket.service';
+import { UserService } from '../../../user/user.service';
 
 @Component({
   selector: 'app-view-active-tickets',
@@ -10,9 +11,11 @@ export class ViewActiveTicketsComponent implements OnInit {
 
   private activeTickets : any;
 
-  constructor(private ticketService: TicketService) { }
+  constructor(private ticketService: TicketService,
+              private userService: UserService) { }
 
   ngOnInit() {
+
     this.ticketService.getActiveTickets().subscribe(
       (data: any) => {
         this.activeTickets = data;

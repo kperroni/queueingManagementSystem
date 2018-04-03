@@ -10,8 +10,8 @@
           <li class="nav-item waves-light" mdbRippleRadius *ngIf="(user | async) !== null">
               <a class="nav-link" href="/createTicket">Create Ticket</a>
           </li>
-          <li class="nav-item waves-light" mdbRippleRadius>
-                <a class="nav-link" href="/viewActiveTickets">Active Tickets</a>
+          <li class="nav-item waves-light" mdbRippleRadius *ngIf="(user | async) !== null">
+                <a class="nav-link" href="/ticket/viewActiveTickets">Active Tickets</a>
             </li>
           <li class="nav-item waves-light" mdbRippleRadius>
               <a class="nav-link">Administrator</a>
