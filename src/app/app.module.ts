@@ -22,6 +22,7 @@ import { ViewActiveTicketsComponent } from './modules/ticket/components/view-act
 import { MessageService } from './shared/services/messages/message.service';
 import { CurrentTicketComponent } from './modules/ticket/components/current-ticket/current-ticket.component';
 import { StudentService } from './modules/student/student.service';
+import { ViewServicesComponent } from './modules/service/view-services/view-services.component';
 
 const appRoutes: Routes = [
 
@@ -31,6 +32,7 @@ const appRoutes: Routes = [
   { path: 'createTicket', component: CreateTicketComponent },
   { path: 'getCurrentTicket', component: CurrentTicketComponent },
   { path: 'viewActiveTickets', component: ViewActiveTicketsComponent },
+  { path: 'viewServices', component: ViewServicesComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ]
@@ -45,7 +47,8 @@ const appRoutes: Routes = [
     LoginComponent,
     CreateTicketComponent,
     CurrentTicketComponent,
-    ViewActiveTicketsComponent
+    ViewActiveTicketsComponent,
+    ViewServicesComponent
   ],
   imports: [
     BrowserModule,

@@ -13,10 +13,20 @@ import { ToasterService } from 'angular5-toaster/angular5-toaster';
 export class HeaderComponent implements OnInit {
 
   user: Observable<any>;
+//  type: any;
   constructor(private UserService: UserService, private router: Router, private toaster: ToasterService) {
     router.events.subscribe(event => {
       if(event instanceof NavigationStart) {
         this.user = this.UserService.getUserSession();
+/*        if(this.user) {
+          this.UserService.getActiveUser().subscribe(
+            (data:any) => {
+              this.type = data.type;
+            },
+            (err) => {console.error(err)}
+          );
+        }
+*/
       }
       // NavigationEnd
       // NavigationCancel

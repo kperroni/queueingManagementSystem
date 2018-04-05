@@ -4,4 +4,5 @@ module.exports = function (app) {
     //handle the routing of get and post request
     app.get('/service/getServices', service.getServices);
     app.post('/service/createService', service.createService);
+    app.post('/service/updateService', service.updateService);
 };
