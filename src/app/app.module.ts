@@ -22,6 +22,9 @@ import { ViewActiveTicketsComponent } from './modules/ticket/components/view-act
 import { MessageService } from './shared/services/messages/message.service';
 import { CurrentTicketComponent } from './modules/ticket/components/current-ticket/current-ticket.component';
 import { StudentService } from './modules/student/student.service';
+import { StartShiftComponent } from './modules/service-provider/components/start-shift/start-shift.component';
+import { ServiceProviderService } from './modules/service-provider/service-provider.service';
+import { QueueService } from './modules/queue/queue.service';
 
 const appRoutes: Routes = [
 
@@ -31,6 +34,7 @@ const appRoutes: Routes = [
   { path: 'createTicket', component: CreateTicketComponent },
   { path: 'getCurrentTicket', component: CurrentTicketComponent },
   { path: 'viewActiveTickets', component: ViewActiveTicketsComponent },
+  { path: 'startShift', component: StartShiftComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ]
@@ -45,7 +49,8 @@ const appRoutes: Routes = [
     LoginComponent,
     CreateTicketComponent,
     CurrentTicketComponent,
-    ViewActiveTicketsComponent
+    ViewActiveTicketsComponent,
+    StartShiftComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +67,10 @@ const appRoutes: Routes = [
     TicketService, 
     ServiceService, 
     StudentService,
+    ServiceProviderService,
+    QueueService,
     MessageService
+
   ],
   bootstrap: [AppComponent]
 })
