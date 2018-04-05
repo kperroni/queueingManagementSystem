@@ -22,7 +22,11 @@ import { ViewActiveTicketsComponent } from './modules/ticket/components/view-act
 import { MessageService } from './shared/services/messages/message.service';
 import { CurrentTicketComponent } from './modules/ticket/components/current-ticket/current-ticket.component';
 import { StudentService } from './modules/student/student.service';
+<<<<<<< HEAD
 import { ViewPrecedingTicketsComponent } from './modules/ticket/components/view-preceding-tickets/view-preceding-tickets.component';
+=======
+import { ViewServicesComponent } from './modules/service/view-services/view-services.component';
+>>>>>>> refs/remotes/origin/master
 
 const appRoutes: Routes = [
 
@@ -31,8 +35,13 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'createTicket', component: CreateTicketComponent },
   { path: 'getCurrentTicket', component: CurrentTicketComponent },
+<<<<<<< HEAD
   { path: 'viewActiveTickets', component: ViewActiveTicketsComponent },  
   { path: 'viewPrecedingTickets', component: ViewPrecedingTicketsComponent },
+=======
+  { path: 'viewActiveTickets', component: ViewActiveTicketsComponent },
+  { path: 'viewServices', component: ViewServicesComponent },
+>>>>>>> refs/remotes/origin/master
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ]
@@ -48,7 +57,11 @@ const appRoutes: Routes = [
     CreateTicketComponent,
     CurrentTicketComponent,
     ViewActiveTicketsComponent,
+<<<<<<< HEAD
     ViewPrecedingTicketsComponent
+=======
+    ViewServicesComponent
+>>>>>>> refs/remotes/origin/master
   ],
   imports: [
     BrowserModule,

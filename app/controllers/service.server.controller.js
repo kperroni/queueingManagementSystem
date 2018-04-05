@@ -31,3 +31,13 @@ exports.getServices = function (req, res, next) {
         }
     });
 };
+
+exports.updateService = function (req, res, next) {
+    Service.findOneAndUpdate({_id:req.body._id}, req.body, function(err, retobj) {
+        if(err) {
+            return next(err);
+        } else {
+            res.json(retobj);
+        }
+    });
+}

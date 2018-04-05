@@ -11,4 +11,8 @@ export class ServiceService {
     return this.http.get('service/getServices');
   }  
 
+  updateService(service)
+  {
+    return this.http.post('service/updateService', service);
+  }  
 }
