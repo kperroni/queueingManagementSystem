@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StartShiftComponent } from './start-shift.component';
+import { StartShiftComponent } from './shift.component';
 
 describe('StartShiftComponent', () => {
   let component: StartShiftComponent;

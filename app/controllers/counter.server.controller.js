@@ -21,3 +21,13 @@ exports.getCounters = function (req, res, next) {
         }
     });
 };
+
+exports.getQueueCounters = function (req, res, next){
+    CounterModel.find({queueId: req.params.queueId}, function (err, counters) {
+        if (err) {
+            return next(err);
+        } else {
+            res.json(counters);
+        }
+    });
+};
