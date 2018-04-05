@@ -57,6 +57,40 @@ exports.createTicket = function (req, res, next) {
     });
 };
 
+exports.viewActiveTickets = function (req, res, next) {
+    console.log("Ticket Controller");
+
+    // Use the 'User' instance's 'find' method to retrieve a new user document
+    Ticket.find({ status: 'A' }, function (err, users) {
+        if (err) {
+            return next(err);
+        } else {
+            res.json(users);
+        }
+    });
+};
+
+exports.getPrecedingTickets = function (req, res, next) {
+    console.log("Ticket Controller");
+
+    if (req.body != null && req.body.type == 'S') {
+
+        var ticket = Ticket.findOne($and[{ status: 'A' }, { studentId: req.body.username }])
+
+        Ticket.find($and[{ status: 'A' }, { creationTime: { $lte: ticket.creationTime } }], function (err, tickets) {
+            if (err) {
+                return next(err);
+            } else {
+                res.json(tickets);
+            }
+        });
+    }
+    else {
+        res.json(null);
+    }
+
+};
+
 exports.getCurrentTicket = function (req, res, next) {
     if (req.user.type != null) {
         console.log("req.user.type", req.user.type);
@@ -87,44 +121,3 @@ exports.updateCurrentTicket = function (req, res, next) {
         }
     });
 };
-
-exports.viewActiveTickets = function (req, res, next) {
-    console.log("Ticket Controller");
-
-    // Use the 'User' instance's 'find' method to retrieve a new user document
-<<<<<<< HEAD
-    Ticket.find({ status: 'A' }, function (err, users) {
-=======
-    Ticket.find({ "status": 'A' }, function (err, users) {
->>>>>>> refs/remotes/origin/master
-        if (err) {
-            return next(err);
-        } else {
-            res.json(users);
-        }
-    });
-};
-<<<<<<< HEAD
-
-exports.getPrecedingTickets = function (req, res, next) {
-    console.log("Ticket Controller");
-
-    if (req.body != null && req.body.type == 'S') {
-
-        var ticket = Ticket.findOne($and[{status : 'A'},{studentId : req.body.username}])
-
-        Ticket.find({}, function (err, tickets) {
-            if (err) {
-                return next(err);
-            } else {
-                res.json(tickets);
-            }
-        });
-    }
-    else {
-        res.json(null);
-    }
-
-};
-=======
->>>>>>> refs/remotes/origin/master

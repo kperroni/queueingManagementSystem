@@ -21,8 +21,7 @@ export class ViewPrecedingTicketsComponent implements OnInit {
 
     this.activeStudent = this.activeStudent.type == 'S'? this.activeStudent : null;
 
-
-    this.ticketService.getPrecedingTickets().subscribe(
+    this.ticketService.viewPrecedingTickets(this.activeStudent).subscribe(
       (data: any) => {
         this.precedingTickets = data;
       },

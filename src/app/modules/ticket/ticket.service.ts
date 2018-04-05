@@ -5,7 +5,7 @@ import { UserService } from '../user/user.service'
 @Injectable()
 export class TicketService {
 
-  constructor(private http: HttpClient,private userService : UserService) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
   createTicket(body) {
     return this.http.post('ticket/createTicket', body);
@@ -16,6 +16,16 @@ export class TicketService {
   }
 
   viewPrecedingTickets(activeStudent) {
-    return this.http.post('ticket/viewPrecedingTickets',activeStudent);
+    return this.http.post('ticket/viewPrecedingTickets', activeStudent);
+  }
+
+  getCurrentActiveTicket(){
+    console.log("getting current ticket");
+    return this.http.get('ticket/getCurrentTicket');
+  }
+
+  updateCurrentTicket(body){
+    console.log("getting current ticket");
+    return this.http.post('ticket/updateCurrentTicket', body);
   }
 }
