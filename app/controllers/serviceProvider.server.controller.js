@@ -31,3 +31,13 @@ exports.getServiceProviderById = function (req, res, next) {
         }
     });
 };
+
+exports.getProviderByUserId = function (req, res, next) {
+    ServiceProviderModel.findOne({userId: req._id}, function (err, serviceProvider) {
+        if (err) {
+            return next(err);
+        } else {
+            res.json(serviceProvider)
+        }
+    });
+};
