@@ -13,21 +13,24 @@
     </select>
     <br>
     <br>
-    <label for="serviceId" class="grey-text">Service</label>
-    <input type="text" name="serviceId" class="form-control" value="{{ currentTicket.serviceId }}" disabled>
+    <label for="service" class="grey-text">Service</label>
+    <input type="text" name="service" class="form-control" value="{{ currentTicket.service }}" disabled>
     <br>
-    <label for="userId" class="grey-text">Submitted by</label>
-    <input type="text" name="userId" class="form-control" value="{{ currentTicket.userId }}" disabled>
+    <label for="username" class="grey-text">Submitted by</label>
+    <input type="text" name="username" class="form-control" value="{{ currentTicket.username }}" disabled>
     <br>
     <label for="subject" class="grey-text">Subject</label>
     <input type="text" name="subject" class="form-control" value="{{ currentTicket.subject }}" disabled>
     <br>
     <label for="description" class="black-text">Ticket Description</label>
-    <textarea [(ngModel)]="currentTicket.description" name="description" class="form-control" rows="4">{{ currentTicket.description }}</textarea>
+    <textarea name="description" class="form-control" rows="4" readonly>{{ currentTicket.description }}</textarea>
     <br>
-    <label for="currentShiftId" class="black-text">Shift ID</label>
-    <input type="text" [(ngModel)]="currentTicket.currentShiftId" name="currentShiftId" class="form-control" value="{{ currentShift._id }}" disabled>
-    <br>
+    <div style="display: none;">
+      <label for="currentShiftId" class="black-text">Shift ID</label>
+      <input type="text" [(ngModel)]="currentTicket.currentShiftId" name="currentShiftId" class="form-control" value="{{ currentShift._id }}"
+        disabled>
+      <br>
+    </div>
     <label for="detailActions" class="black-text">Actions Taken</label>
     <textarea [(ngModel)]="currentTicket.detailActions" name="detailActions" class="form-control" rows="3"></textarea>
     <br>
@@ -36,6 +39,8 @@
       <button (click)="onClickUpdateTicket()" class="btn btn-unique">Update Ticket</button>
     </div>
   </form>
-  <ng-template #noActiveTickets><ng-container *ngIf="userType == 'E'; else permissionDenied">There are no active tickets in the system.</ng-container></ng-template>
+  <ng-template #noActiveTickets>
+    <ng-container *ngIf="userType == 'E'; else permissionDenied">There are no active tickets in the system.</ng-container>
+  </ng-template>
   <ng-template #permissionDenied>You must be an employee to see this page.</ng-template>
 </div>

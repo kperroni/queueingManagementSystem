@@ -6,13 +6,15 @@ export class ServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getServices()
-  {
+  getServices() {
     return this.http.get('service/getServices');
-  }  
+  }
 
-  updateService(service)
-  {
+  updateService(service) {
     return this.http.post('service/updateService', service);
-  }  
+  }
+
+  getServiceById(body) {
+    return this.http.post('service/getServiceById', body);
+  }
 }
