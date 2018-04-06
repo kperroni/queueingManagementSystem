@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from '../../ticket.service';
 import { ServiceProviderService } from '../../../service-provider/service-provider.service';
+import { UserService } from '../../../user/user.service';
+import { ServiceService } from '../../../service/service.service';
 import { Router } from '@angular/router';
 import { MessageService } from '../../../../shared/services/messages/message.service';
 import { ToasterService } from 'angular5-toaster';
@@ -16,8 +18,8 @@ export class CurrentTicketComponent implements OnInit {
   private stringMsg: any;
   private currentShift: any;
 
-  constructor(private ticketService: TicketService, private providerService: ServiceProviderService, private router: Router,
-    private message: MessageService, private toaster: ToasterService) { }
+  constructor(private ticketService: TicketService, private providerService: ServiceProviderService, private userService: UserService,
+    private serviceService: ServiceService, private router: Router, private message: MessageService, private toaster: ToasterService) { }
 
   ngOnInit() {
     if (this.message.getMessage().clear === "0") {
@@ -43,6 +45,20 @@ export class CurrentTicketComponent implements OnInit {
             console.log("Some error occured!");
           case '1':
             this.currentTicket = data.ticket[0];
+            this.userService.getUserById({ _id: this.currentTicket.userId }).subscribe(
+              (data2: any) => {
+                if (data2 != null) {
+                  this.currentTicket.username = data2.username;
+                  this.serviceService.getServiceById({ _id: this.currentTicket.serviceId }).subscribe(
+                    (data3: any) => {
+                      if (data3 != null) {
+                        this.currentTicket.service = data3.name;
+                      }
+                    }
+                  )
+                }
+              }
+            )
             console.log(this.currentTicket);
         }
       },

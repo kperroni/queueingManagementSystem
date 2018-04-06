@@ -32,9 +32,21 @@ exports.getServices = function (req, res, next) {
     });
 };
 
+exports.getServiceById = function (req, res, next) {
+    console.log("controller", "getServices");
+    Service.findOne({ _id: req.body._id }, function (err, service) {
+        if (err) {
+            return next(err);
+        } else {
+            console.log("service", service);
+            res.json(service);
+        }
+    });
+};
+
 exports.updateService = function (req, res, next) {
-    Service.findOneAndUpdate({_id:req.body._id}, req.body, function(err, retobj) {
-        if(err) {
+    Service.findOneAndUpdate({ _id: req.body._id }, req.body, function (err, retobj) {
+        if (err) {
             return next(err);
         } else {
             res.json(retobj);

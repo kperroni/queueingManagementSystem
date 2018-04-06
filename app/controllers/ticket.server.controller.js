@@ -3,6 +3,8 @@ var Ticket = require('mongoose').model('Ticket');
 var User = require('mongoose').model('User');
 var Guest = require('mongoose').model('Guest');
 var Service = require('mongoose').model('Service');
+var serviceC = require('../controllers/service.server.controller');
+var userC = require('../controllers/user.server.controller');
 
 exports.createTicket = function (req, res, next) {
     console.log("Ticket Controller");
@@ -10,7 +12,6 @@ exports.createTicket = function (req, res, next) {
     // verify it the user is logged in
     if (req.user.id == null) {
         return res.json({ message: "0", err: "you must login first" });
-        console.log("req.user.id", req.user.id);
     }
 
     Ticket.findMax(function (err, ret) {     // get the maximum number of ticket
@@ -69,6 +70,7 @@ exports.getCurrentTicket = function (req, res, next) {
     if (req.user.type != null) {
         console.log("req.user.type", req.user.type);
     }
+
     Ticket.find({ "status": 'A' }).sort({ "weight": 1, "ticketNumber": 1 }).limit(1).exec(function (err, retobj) {
         const ret = {};
         if (err) {
@@ -89,7 +91,7 @@ exports.updateCurrentTicket = function (req, res, next) {
 
     var query = { "ticketNumber": req.body.ticketNumber },
         updateQ = {
-            '$set': { 'status': req.body.status, 'description': req.body.description },
+            '$set': { 'status': req.body.status },
             '$addToSet': { 'details': { 'shiftId': req.body.currentShiftId, 'actions': req.body.detailActions } }
         },
         options = { new: true };
