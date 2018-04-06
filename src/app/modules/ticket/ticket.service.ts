@@ -19,13 +19,17 @@ export class TicketService {
     return this.http.post('ticket/viewPrecedingTickets', activeStudent);
   }
 
-  getCurrentActiveTicket(){
+  getCurrentActiveTicket() {
     console.log("getting current ticket");
     return this.http.get('ticket/getCurrentTicket');
   }
 
-  updateCurrentTicket(body){
+  updateCurrentTicket(body) {
     console.log("getting current ticket");
     return this.http.post('ticket/updateCurrentTicket', body);
+  }
+
+  getStudentTicket(body) {
+    return this.http.post('ticket/getStudentTicket', body);
   }
 }

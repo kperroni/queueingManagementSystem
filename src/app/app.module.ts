@@ -28,6 +28,7 @@ import { StartShiftComponent } from './modules/service-provider/components/shift
 import { ServiceProviderService } from './modules/service-provider/service-provider.service';
 import { QueueService } from './modules/queue/queue.service';
 import { CounterService } from './modules/counter/counter.service';
+import {ViewStudentTicketComponent} from './modules/ticket/components/view-student-ticket/view-student-ticket.component';
 
 const appRoutes: Routes = [
 
@@ -41,6 +42,7 @@ const appRoutes: Routes = [
   { path: 'viewActiveTickets', component: ViewActiveTicketsComponent },
   { path: 'viewServices', component: ViewServicesComponent },
   { path: 'shift', component: StartShiftComponent },
+  { path: 'viewStudentTicket', component: ViewStudentTicketComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ]
@@ -59,7 +61,8 @@ const appRoutes: Routes = [
     ViewPrecedingTicketsComponent,
     ViewServicesComponent,
     ViewServicesComponent,
-    StartShiftComponent
+    StartShiftComponent,
+    ViewStudentTicketComponent
   ],
 
   imports: [

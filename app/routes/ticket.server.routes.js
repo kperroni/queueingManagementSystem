@@ -11,4 +11,6 @@ module.exports = function (app) {
     app.post('/ticket/updateCurrentTicket', ticketController.updateCurrentTicket);
     
     app.post('/ticket/viewPrecedingTickets', ticketController.getPrecedingTickets);
+    
+    app.post('/getStudentTicket', ticketController.viewStudentTicket);    
 };

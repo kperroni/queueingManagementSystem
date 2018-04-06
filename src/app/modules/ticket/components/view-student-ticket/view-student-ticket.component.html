@@ -1,0 +1,19 @@
+<div class="container">
+  <h1>Tickets Details</h1>
+  <hr>
+
+  <table class="table table-condensed">
+    <tr>
+      <th>Ticket Number</th>
+      <th>Student Number</th>
+      <th>Subject</th>
+      <th>Description</th>
+    </tr>
+    <tr *ngFor = "let ticket of activeTickets">
+      <td>{{ ticket.ticketNumber }}</td>
+      <td>{{ ticket.studentId }}</td>
+      <td>{{ ticket.subject }}</td>
+      <td>{{ ticket.description }}</td>
+    </tr>
+  </table>
+</div>

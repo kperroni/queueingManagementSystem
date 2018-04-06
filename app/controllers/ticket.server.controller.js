@@ -128,3 +128,18 @@ exports.getPrecedingTickets = function (req, res, next) {
     }
 
 };
+
+exports.viewStudentTicket = function (req, res, next) {
+    console.log("Ticket Controller");
+
+    var activeUser = req.student;
+
+    // Use the 'User' instance's 'find' method to retrieve a new user document
+    Ticket.find($and[{ status: 'A' }, { studentId : activeUser.studentNumber }], function (err, users) {
+        if (err) {
+            return next(err);
+        } else {
+            res.json(users);
+        }
+    });
+}
