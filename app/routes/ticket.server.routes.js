@@ -12,5 +12,5 @@ module.exports = function (app) {
     
     app.post('/ticket/viewPrecedingTickets', ticketController.getPrecedingTickets);
     
-    app.post('/getStudentTicket', ticketController.viewStudentTicket);    
+    app.post('/ticket/getStudentTicket', ticketController.viewStudentTicket);    
 };

@@ -131,10 +131,10 @@ exports.getPrecedingTickets = function (req, res, next) {
 exports.viewStudentTicket = function (req, res, next) {
     console.log("Ticket Controller");
 
-    var student = req;
+    var student = req.body;
 
     // Use the 'User' instance's 'find' method to retrieve a new user document
-    Ticket.find($and[{ status: 'A' }, { studentId : student.studentNumber }], function (err, users) {
+    Ticket.find({ status: 'A', studentId: student._id }, function (err, users) {
         if (err) {
             return next(err);
         } else {
