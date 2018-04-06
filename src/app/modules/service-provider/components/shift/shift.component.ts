@@ -80,4 +80,8 @@ export class StartShiftComponent implements OnInit {
       }
     );
   }
+
+  onFinishShift(){
+    
+  }
 }
