@@ -13,6 +13,11 @@ var ShiftSchema = new Schema({
         ref: 'ServiceProvider',
         required: true,
     },
+    counterId:{
+        type: Schema.Types.ObjectId,
+        ref: 'Counter',
+        required: true,
+    },
     shiftStart: {
         type: Date,
         default: Date.now,
@@ -20,7 +25,6 @@ var ShiftSchema = new Schema({
     },
     shiftFinish:{
         type: Date,
-        required: true,
     }, 
 });
 

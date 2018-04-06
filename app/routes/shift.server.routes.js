@@ -4,4 +4,5 @@ module.exports = function (app) {
     //handle the routing of get and post request
     app.get('/shift/getShifts', shift.getShifts);
     app.post('/shift/createShift', shift.createShift);
+    app.get('/shift/checkShift', shift.checkShift);
 };
