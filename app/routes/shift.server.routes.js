@@ -5,4 +5,5 @@ module.exports = function (app) {
     app.get('/shift/getShifts', shift.getShifts);
     app.post('/shift/createShift', shift.createShift);
     app.get('/shift/checkShift', shift.checkShift);
+    app.put('/shift/finishShift', shift.finishShift);
 };
