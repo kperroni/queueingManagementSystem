@@ -18,6 +18,13 @@ export class CurrentTicketComponent implements OnInit {
     private message: MessageService, private toaster: ToasterService) { }
 
   ngOnInit() {
+
+    if(this.message.getMessage().clear === "0"){   
+      let toastMessage = this.message.getMessage();
+      this.toaster.pop(toastMessage.type, toastMessage.title, toastMessage.body);
+      this.message.clearMessage();
+    }
+    
     this.ticketService.getCurrentActiveTicket().subscribe(
       (data: any) => {
         this.stringMsg = data.message;
