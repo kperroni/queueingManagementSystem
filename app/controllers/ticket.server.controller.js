@@ -10,7 +10,7 @@ exports.createTicket = function (req, res, next) {
     // verify it the user is logged in
     if (req.user.id == null) {
         return res.json({ message: "0", err: "you must login first" });
-        //console.log("req.user.id", req.user.id);
+        console.log("req.user.id", req.user.id);
     }
 
     Ticket.findMax(function (err, ret) {     // get the maximum number of ticket
@@ -23,14 +23,32 @@ exports.createTicket = function (req, res, next) {
                 req.body.ticket.ticketNumber = 1;   // first ticket
             }
 
-            req.body.ticket.userId = req.user.id;   // set the logged-in user id
-            req.body.ticket.weight = 1;             // temporarily a fixed value
+            Service.findById(req.body.ticket.serviceId, function (err, service) {
+                if (err) {
+                    return res.json({ message: "0", err: err });
+                } else {
 
-            if (req.body.guest != null) { // if we need to insert first the guest
-                var guest = new Guest(req.body.guest);
-                guest.save(function (err, ret) { // save the new guest
-                    if (err) {
-                        return res.json({ message: "0", err: err });
+                    req.body.ticket.weight = req.body.ticket.ticketNumber - service.weight + service.averageMinutes;
+                    req.body.ticket.userId = req.user.id;   // set the loged user id
+
+                    if (req.body.guest != null) { // if we need to inser fisrt the guest
+                        var guest = new Guest(req.body.guest);
+                        guest.save(function (err, ret) { // save the new guest
+                            if (err) {
+                                return res.json({ message: "0", err: err });
+                            } else {
+                                console.log("guest", ret);
+                                req.body.ticket.guestId = ret._id;      // set the guest id in the ticket
+                                var ticket = new Ticket(req.body.ticket);
+                                ticket.save(function (err) {                        // save the ticket after the guest
+                                    if (err) {
+                                        return res.json({ message: "0", err: err });
+                                    } else {
+                                        res.json({ message: "1", ticketNumber: req.body.ticket.ticketNumber });
+                                    }
+                                });
+                            }
+                        });
                     } else {
                         var ticket = new Ticket(req.body.ticket);
                         ticket.save(function (err) {                        // save the ticket without any guest
@@ -41,17 +59,8 @@ exports.createTicket = function (req, res, next) {
                             }
                         });
                     }
-                });
-            } else {
-                var ticket = new Ticket(req.body.ticket);
-                ticket.save(function (err) {                        // save the ticket without any guest
-                    if (err) {
-                        return res.json({ message: "0", err: err });
-                    } else {
-                        res.json({ message: "1", ticketNumber: req.body.ticket.ticketNumber });
-                    }
-                });
-            }
+                }
+            });
         }
     });
 };
@@ -60,7 +69,7 @@ exports.getCurrentTicket = function (req, res, next) {
     if (req.user.type != null) {
         console.log("req.user.type", req.user.type);
     }
-    Ticket.find({ "status": 'A' }).sort("ticketNumber").limit(1).exec(function (err, retobj) {
+    Ticket.find({ "status": 'A' }).sort({ "weight": 1, "ticketNumber": 1 }).limit(1).exec(function (err, retobj) {
         const ret = {};
         if (err) {
             return res.json({ message: "0", err: err });
