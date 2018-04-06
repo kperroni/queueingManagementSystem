@@ -22,11 +22,13 @@ import { ViewActiveTicketsComponent } from './modules/ticket/components/view-act
 import { MessageService } from './shared/services/messages/message.service';
 import { CurrentTicketComponent } from './modules/ticket/components/current-ticket/current-ticket.component';
 import { StudentService } from './modules/student/student.service';
+import { ViewPrecedingTicketsComponent } from './modules/ticket/components/view-preceding-tickets/view-preceding-tickets.component';
 import { ViewServicesComponent } from './modules/service/view-services/view-services.component';
 import { StartShiftComponent } from './modules/service-provider/components/shift/shift.component';
 import { ServiceProviderService } from './modules/service-provider/service-provider.service';
 import { QueueService } from './modules/queue/queue.service';
 import { CounterService } from './modules/counter/counter.service';
+import {ViewStudentTicketComponent} from './modules/ticket/components/view-student-ticket/view-student-ticket.component';
 
 const appRoutes: Routes = [
 
@@ -35,9 +37,12 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'createTicket', component: CreateTicketComponent },
   { path: 'getCurrentTicket', component: CurrentTicketComponent },
+  { path: 'viewActiveTickets', component: ViewActiveTicketsComponent },  
+  { path: 'viewPrecedingTickets', component: ViewPrecedingTicketsComponent },
   { path: 'viewActiveTickets', component: ViewActiveTicketsComponent },
   { path: 'viewServices', component: ViewServicesComponent },
   { path: 'shift', component: StartShiftComponent },
+  { path: 'viewStudentTicket', component: ViewStudentTicketComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ]
@@ -53,9 +58,13 @@ const appRoutes: Routes = [
     CreateTicketComponent,
     CurrentTicketComponent,
     ViewActiveTicketsComponent,
+    ViewPrecedingTicketsComponent,
     ViewServicesComponent,
-    StartShiftComponent
+    ViewServicesComponent,
+    StartShiftComponent,
+    ViewStudentTicketComponent
   ],
+
   imports: [
     BrowserModule,
     FormsModule,
@@ -65,6 +74,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     ToasterModule
   ],
+  
   schemas: [NO_ERRORS_SCHEMA],
   providers: [
     UserService,

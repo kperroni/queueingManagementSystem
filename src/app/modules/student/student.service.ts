@@ -6,13 +6,12 @@ export class StudentService {
 
   constructor(private http: HttpClient) { }
 
-  getStudentByUserId(id)
-  {
+  getStudentByUserId(id) {
     return this.http.post('student/getStudentByUserId', id);
-  }  
-  getStudentByStudentNumber(studentNumber)
-  {
+  }
+
+  getStudentByStudentNumber(studentNumber) {
     console.log("studentNumber", studentNumber);
     return this.http.post('student/getStudentByStudentNumber', studentNumber);
-  }  
+  }
 }

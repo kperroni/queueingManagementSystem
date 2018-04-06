@@ -1,26 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
+import { UserService } from '../user/user.service'
 
 @Injectable()
 export class TicketService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
-  createTicket(body){
+  createTicket(body) {
     return this.http.post('ticket/createTicket', body);
   }
 
-  getCurrentActiveTicket(){
+  getActiveTickets() {
+    return this.http.get('ticket/getActiveTickets');
+  }
+
+  viewPrecedingTickets(activeStudent) {
+    return this.http.post('ticket/viewPrecedingTickets', activeStudent);
+  }
+
+  getCurrentActiveTicket() {
     console.log("getting current ticket");
     return this.http.get('ticket/getCurrentTicket');
   }
 
-  updateCurrentTicket(body){
+  updateCurrentTicket(body) {
     console.log("getting current ticket");
     return this.http.post('ticket/updateCurrentTicket', body);
   }
 
-  getActiveTickets(){
-    return this.http.get('/getActiveTickets');
+  getStudentTicket(body) {
+    return this.http.post('ticket/getStudentTicket', body);
   }
 }

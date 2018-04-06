@@ -10,10 +10,9 @@
       <th>Description</th>
     </tr>
     <tr *ngFor = "let ticket of activeTickets">
-      <td>{{ ticket.ticketNumber }}</td>
-      <td>{{ ticket.studentId }}</td>
-      <td>{{ ticket.subject }}</td>
-      <td>{{ ticket.description }}</td>
+      <td><a class="nav-link" href="/ticket/viewStudentTicket">{{ ticket.studentId }}</a></td>
+      <td><a class="nav-link" href="/ticket/viewStudentTicket">{{ ticket.subject }}</a></td>
+      <td><a class="nav-link" href="/ticket/viewStudentTicket">{{ ticket.description }}</a></td>
     </tr>
   </table>
 </div>
