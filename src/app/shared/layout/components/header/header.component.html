@@ -14,9 +14,6 @@
             <li class="nav-item waves-light" mdbRippleRadius *ngIf="(user | async) !== null">
                 <a class="nav-link" href="/createTicket">Create Ticket</a>
             </li>
-            <li class="nav-item waves-light" mdbRippleRadius *ngIf="(user | async) !== null">
-                <a class="nav-link" href="/getCurrentTicket">Resolve Next Ticket</a>
-            </li>
             <li class="nav-item waves-light" mdbRippleRadius>
                 <a class="nav-link" href="/viewActiveTickets">Active Tickets</a>
             </li>
@@ -26,6 +23,9 @@
                     <ng-container *ngIf="user.type === 'E'">
                         <li class="nav-item waves-light" mdbRippleRadius>
                             <a class="nav-link" href="/shift">Shifts</a>
+                        </li>
+                        <li class="nav-item waves-light" mdbRippleRadius>
+                            <a class="nav-link" href="/getCurrentTicket">Resolve Next Ticket</a>
                         </li>
                     </ng-container>
                 </ng-container>
