@@ -13,4 +13,8 @@ export class ServiceProviderService {
   checkShift(){
     return this.http.get('shift/checkShift');
   }
+
+  finishShift(){
+    return this.http.put('shift/finishShift', {});
+  }
 }
