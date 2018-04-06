@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from '../../ticket.service';
+import { ServiceProviderService } from '../../../service-provider/service-provider.service';
 import { Router } from '@angular/router';
 import { MessageService } from '../../../../shared/services/messages/message.service';
 import { ToasterService } from 'angular5-toaster';
@@ -13,18 +14,26 @@ export class CurrentTicketComponent implements OnInit {
 
   private currentTicket: any;
   private stringMsg: any;
+  private currentShift: any;
 
-  constructor(private ticketService: TicketService, private router: Router,
+  constructor(private ticketService: TicketService, private providerService: ServiceProviderService, private router: Router,
     private message: MessageService, private toaster: ToasterService) { }
 
   ngOnInit() {
-
-    if(this.message.getMessage().clear === "0"){   
+    if (this.message.getMessage().clear === "0") {
       let toastMessage = this.message.getMessage();
       this.toaster.pop(toastMessage.type, toastMessage.title, toastMessage.body);
       this.message.clearMessage();
     }
-    
+
+    this.providerService.checkShift().subscribe(
+      (data: any) => {
+        this.currentShift = data[0];
+        console.log("currentShiftId", this.currentShift._id);
+      },
+      err => { console.error(err); }
+    );
+
     this.ticketService.getCurrentActiveTicket().subscribe(
       (data: any) => {
         this.stringMsg = data.message;

@@ -25,6 +25,12 @@
     <label for="description" class="black-text">Ticket Description</label>
     <textarea [(ngModel)]="currentTicket.description" name="description" class="form-control" rows="4">{{ currentTicket.description }}</textarea>
     <br>
+    <label for="currentShiftId" class="black-text">Shift ID</label>
+    <input type="text" [(ngModel)]="currentTicket.currentShiftId" name="currentShiftId" class="form-control" value="{{ currentShift._id }}" disabled>
+    <br>
+    <label for="detailActions" class="black-text">Actions Taken</label>
+    <textarea [(ngModel)]="currentTicket.detailActions" name="detailActions" class="form-control" rows="3"></textarea>
+    <br>
 
     <div class="text-center mt-4">
       <button (click)="onClickUpdateTicket()" class="btn btn-unique">Update Ticket</button>
