@@ -36,3 +36,15 @@ exports.getShifts = function (req, res, next) {
         }
     });
 };
+
+exports.finishShift = function (req, res, next){
+    ServiceProvider.getServiceProviderById(req, res, (serviceProviderData) => {
+        ShiftModel.update({ serviceProviderId: serviceProviderData._id, shiftFinish: null}, { $set: { shiftFinish: new Date }}, function (err, shift){
+            if (err) {
+                return next(err);
+            } else {
+                res.json({message: "Shift Successfully Finished"});
+            }
+        });
+    });
+};

@@ -21,12 +21,28 @@ export class ViewPrecedingTicketsComponent implements OnInit {
 
     this.userService.getActiveUser().subscribe(
       (user: any) => {
+        console.log(user);
         if (user.type == 'S') {
-          this.activeStudent = this.studentService.getStudentByUserId(user._id);
+          this.studentService.getStudentByUserId({userId: user._id}).subscribe(
+            (student: any) => {
+              console.log("is student");
+              console.log(student);
+              console.log(student.studentNumber);
 
-          this.ticketService.viewPrecedingTickets(this.activeStudent).subscribe(
-            (data: any) => {
-              this.precedingTickets = data;
+              this.activeStudent = student;
+
+              this.ticketService.getStudentTicket({body : student}).subscribe(
+                (data: any) => {
+                  this.precedingTickets = data;
+                  this.precedingTickets.forEach(ticket => {
+                    this.studentService.getStudentByUserId({ userId: ticket.studentId }).subscribe(
+                      (student2: any) => {
+                          ticket.studentNumber = student2.studentNumber
+                      }, err => { console.error(err); });
+                  });
+                },
+                err => { console.error(err); }
+              );
             },
             err => { console.error(err); }
           );
@@ -34,7 +50,5 @@ export class ViewPrecedingTicketsComponent implements OnInit {
       },
       err => { console.error(err); }
     );
-
   }
-
 }

@@ -4,13 +4,12 @@
 
   <table class="table table-condensed">
     <tr>
-      <th>Ticket Number</th>
       <th>Student Number</th>
       <th>Subject</th>
       <th>Description</th>
     </tr>
     <tr *ngFor = "let ticket of precedingTickets">
-      <td>{{ ticket.studentId }}</td>
+      <td>{{ ticket.studentNumber }}</td>
       <td>{{ ticket.subject }}</td>
       <td>{{ ticket.description }}</td>
     </tr>

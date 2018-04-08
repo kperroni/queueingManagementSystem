@@ -64,7 +64,7 @@ export class StartShiftComponent implements OnInit {
         (data: any) => {
           console.log(data.message);
           this.MessageService.setMessage('success', 'Qme', data.message);
-          this.Router.navigate(['/getCurrentTicket']);
+          this.Router.navigate(['/home']);
         }
       );
   }
@@ -82,6 +82,12 @@ export class StartShiftComponent implements OnInit {
   }
 
   onFinishShift(){
-    
+    this.ServiceProviderService.finishShift().
+    subscribe(
+      (data: any) => {
+        this.MessageService.setMessage('success', 'Qme', data.message);
+        this.Router.navigate(['/home']);
+      }
+    );
   }
 }
