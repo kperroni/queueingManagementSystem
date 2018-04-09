@@ -23,7 +23,7 @@ exports.getServiceProviders = function (req, res, next) {
 };
 
 exports.getServiceProviderById = function (req, res, next) {
-    ServiceProviderModel.findOne({userId: req.user._id}, function (err, serviceProvider) {
+    ServiceProviderModel.findOne({ userId: req.user._id }, function (err, serviceProvider) {
         if (err) {
             return next(err);
         } else {
@@ -33,7 +33,10 @@ exports.getServiceProviderById = function (req, res, next) {
 };
 
 exports.getProviderByUserId = function (req, res, next) {
-    ServiceProviderModel.findOne({userId: req._id}, function (err, serviceProvider) {
+
+    console.log("controller log : " + req)
+
+    ServiceProviderModel.findOne({ userId: req._id }, function (err, serviceProvider) {
         if (err) {
             return next(err);
         } else {

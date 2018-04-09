@@ -45,6 +45,8 @@ export class HeaderComponent implements OnInit {
         if(data.message == 1){
           this.toaster.pop('success', 'Qme', 'You have successfully logged out');
           this.user = this.UserService.getUserSession();
+
+          this.router.navigateByUrl('/home');
         }       
         else{
           console.log("Something went wrong when logging out");
