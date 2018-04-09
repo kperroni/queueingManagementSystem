@@ -10,13 +10,13 @@
       <th>Description</th>
       <th>Status</th>
     </tr>
-    <tr *ngFor="let ticket of activeTickets">
+    <tr *ngIf="(activeTickets | async); let activeTickets;">
 
-      <td>{{ ticket.ticketNumber }}</td>
-      <td>{{ ticket.studentNumber }}</td>
-      <td>{{ ticket.subject }}</td>
-      <td>{{ ticket.description }}</td>
-      <td>{{ ticket.status }}</td>
+      <td>{{ activeTickets.ticketNumber }}</td>
+      <td>{{ activeTickets.studentNumber }}</td>
+      <td>{{ activeTickets.subject }}</td>
+      <td>{{ activeTickets.description }}</td>
+      <td>{{ activeTickets.status }}</td>
     </tr>
   </table>
 </div>

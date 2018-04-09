@@ -145,7 +145,7 @@ exports.viewStudentTicket = function (req, res, next) {
     var student = req.body;
 
     // Use the 'User' instance's 'find' method to retrieve a new user document
-    Ticket.find({ status: 'A', studentId: student._id, studentId: { $ne: null } }, function (err, users) {
+    Ticket.findOne({ status: 'A', studentId: student._id, studentId: { $ne: null } }, function (err, users) {
         if (err) {
             return next(err);
         } else {
