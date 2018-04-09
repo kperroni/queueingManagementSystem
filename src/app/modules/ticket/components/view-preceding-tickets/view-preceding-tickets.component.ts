@@ -30,13 +30,20 @@ export class ViewPrecedingTicketsComponent implements OnInit {
 
               this.activeStudent = student;
 
-              this.ticketService.getStudentTicket({ body: student }).subscribe(
+              this.ticketService.viewPrecedingTickets({ body: student }).subscribe(
                 (data: any) => {
                   this.precedingTickets = data;
+
+                  console.log("yeh rah " + data);
+
                   this.precedingTickets.forEach(ticket => {
                     this.studentService.getStudentByUserId({ userId: ticket.studentId }).subscribe(
                       (student2: any) => {
-                        ticket.studentNumber = student2.studentNumber
+
+                        if (student2 !== null) {
+                          console.log(student2);
+                          ticket.studentNumber = student2.studentNumber;
+                        }
                       }, err => { console.error(err); });
                   });
                 },

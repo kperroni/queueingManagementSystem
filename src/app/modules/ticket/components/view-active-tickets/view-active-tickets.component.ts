@@ -38,7 +38,9 @@ export class ViewActiveTicketsComponent implements OnInit {
                   this.activeTickets.forEach(ticket => {
                     this.studentService.getStudentByUserId({ userId: ticket.studentId }).subscribe(
                       (student2: any) => {
-                        ticket.studentNumber = student2.studentNumber
+
+                        if (student2 !== null)
+                          ticket.studentNumber = student2.studentNumber;
                       }, err => { console.error(err); });
                   });
                 },

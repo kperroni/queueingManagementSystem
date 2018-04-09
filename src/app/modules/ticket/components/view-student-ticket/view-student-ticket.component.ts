@@ -10,8 +10,10 @@ import { StudentService } from '../../../student/student.service';
 })
 export class ViewStudentTicketComponent implements OnInit {
 
-  private activeTickets: any;
+  private activeTicket: any;
   private activeStudent: any;
+
+  private ticketCount: number;
 
   private studentNumber: number;
 
@@ -32,10 +34,19 @@ export class ViewStudentTicketComponent implements OnInit {
               this.activeStudent = student;
               this.ticketService.getStudentTicket({ body: student }).subscribe(
                 (data: any) => {
-                  this.activeTickets = data;
-                  this.activeTickets.forEach(ticket => {
-                    ticket.studentNumber = student.studentNumber;
-                  });
+
+                  data.studentNumber = student.studentNumber;
+                  this.activeTicket = [];
+
+                  console.log(data);
+
+                  this.activeTicket.push(data);
+
+                  this.ticketService.viewPrecedingTickets({ body: student }).subscribe(
+                    (data: any) => {
+
+                      this.ticketCount = data.length;
+                    });
                 },
                 err => { console.error(err); }
               );

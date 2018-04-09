@@ -123,18 +123,21 @@ exports.getPrecedingTickets = function (req, res, next) {
 
     if (req.body != null && req.body.type == 'S') {
 
-        var ticket = Ticket.findOne($and[{ status: 'A' }, { studentId: req.body.username }])
+        var student = req.body;
 
-        Ticket.find($and[{ status: 'A' }, { creationTime: { $lte: ticket.creationTime } }], function (err, tickets) {
+        // Use the 'User' instance's 'find' method to retrieve a new user document
+        Ticket.find({
+            status: 'A',
+            studentId: { $ne: student._id },
+            studentId: { $ne: null }
+            //creationTime: { $lte: ticket.creationTime }
+        }, function (err, tickets) {
             if (err) {
                 return next(err);
             } else {
                 res.json(tickets);
             }
         });
-    }
-    else {
-        res.json(null);
     }
 
 };
@@ -145,7 +148,9 @@ exports.viewStudentTicket = function (req, res, next) {
     var student = req.body;
 
     // Use the 'User' instance's 'find' method to retrieve a new user document
-    Ticket.findOne({ status: 'A', studentId: student._id, studentId: { $ne: null } }, function (err, users) {
+    Ticket.findOne({ status: 'A', 
+    studentId: student._id, 
+    studentId: { $ne: null } }, function (err, users) {
         if (err) {
             return next(err);
         } else {
