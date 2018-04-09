@@ -3,6 +3,9 @@ import { TicketService } from '../../ticket.service';
 import { ServiceProviderService } from '../../../service-provider/service-provider.service';
 import { UserService } from '../../../user/user.service';
 import { ServiceService } from '../../../service/service.service';
+import { GuestService } from '../../../guest/guest.service';
+import { StudentService } from '../../../student/student.service';
+import { CounterService } from '../../../counter/counter.service';
 import { Router } from '@angular/router';
 import { MessageService } from '../../../../shared/services/messages/message.service';
 import { ToasterService } from 'angular5-toaster';
@@ -19,7 +22,8 @@ export class CurrentTicketComponent implements OnInit {
   private currentShift: any;
 
   constructor(private ticketService: TicketService, private providerService: ServiceProviderService, private userService: UserService,
-    private serviceService: ServiceService, private router: Router, private message: MessageService, private toaster: ToasterService) { }
+    private serviceService: ServiceService, private guestService: GuestService, private studentService: StudentService, private counterService: CounterService,
+    private router: Router, private message: MessageService, private toaster: ToasterService) { }
 
   ngOnInit() {
     if (this.message.getMessage().clear === "0") {
@@ -67,7 +71,6 @@ export class CurrentTicketComponent implements OnInit {
   }
 
   onClickUpdateTicket() {
-    //TODO: update ticket and change status
     this.ticketService.updateCurrentTicket(this.currentTicket)
       .subscribe(
         (data: any) => {
@@ -91,5 +94,40 @@ export class CurrentTicketComponent implements OnInit {
         },
         err => { console.error(err); }
       );
+  }
+
+  onClickCallTicket() {
+    this.counterService.getCounterByCounterId({ counterId: this.currentShift.counterId }).subscribe(
+      (data: any) => {
+        console.log("data", data);
+        if (data != null) {
+          this.currentShift.counterName = data.counterName;
+          if (this.currentTicket.studentId) {
+            this.studentService.getStudentByStudentId({ studentId: this.currentTicket.studentId }).subscribe(
+              (data2: any) => {
+                console.log("data2", data2);
+                if (data2 != null) {
+                  this.currentTicket.ticketFor = data2.studentNumber;
+                  this.toaster.pop('success', 'Calling Ticket...', 'Student #' + this.currentTicket.ticketFor +
+                    ' should proceed to counter ' + this.currentShift.counterName + '.');
+                }
+              }
+            );
+          }
+          else {
+            this.guestService.getGuestByGuestId({ guestId: this.currentTicket.guestId }).subscribe(
+              (data2: any) => {
+                console.log("data2", data2);
+                if (data2 != null) {
+                  this.currentTicket.ticketFor = data2.firstName + " " + data2.lastName;
+                  this.toaster.pop('success', 'Calling Ticket...', 'Guest \'' + this.currentTicket.ticketFor +
+                    '\' should proceed to counter ' + this.currentShift.counterName + '.');
+                }
+              }
+            );
+          }
+        }
+      }
+    );
   }
 }

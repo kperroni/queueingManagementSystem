@@ -6,7 +6,10 @@ export class CounterService {
 
   constructor(private http: HttpClient) { }
 
-  getQueueCounters(body){
-    return this.http.get('counter/getQueueCounters/'+body);
+  getQueueCounters(body) {
+    return this.http.get('counter/getQueueCounters/' + body);
+  }
+  getCounterByCounterId(body) {
+    return this.http.post('counter/getCounterbyCounterId', body);
   }
 }
