@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from '../../ticket.service';
 import { UserService } from '../../../user/user.service';
+import { Router, NavigationStart } from '@angular/router';
 import { StudentService } from '../../../student/student.service';
 
 @Component({
@@ -15,29 +16,27 @@ export class ViewPrecedingTicketsComponent implements OnInit {
 
   constructor(private ticketService: TicketService,
     private userService: UserService,
-    private studentService: StudentService) { }
+    private studentService: StudentService,
+    private router: Router) { }
 
   ngOnInit() {
 
     this.userService.getActiveUser().subscribe(
       (user: any) => {
         console.log(user);
-        if (user.type == 'S') {
-          this.studentService.getStudentByUserId({userId: user._id}).subscribe(
+        if (user !== null && user.type == 'S') {
+          this.studentService.getStudentByUserId({ userId: user._id }).subscribe(
             (student: any) => {
-              console.log("is student");
-              console.log(student);
-              console.log(student.studentNumber);
 
               this.activeStudent = student;
 
-              this.ticketService.getStudentTicket({body : student}).subscribe(
+              this.ticketService.getStudentTicket({ body: student }).subscribe(
                 (data: any) => {
                   this.precedingTickets = data;
                   this.precedingTickets.forEach(ticket => {
                     this.studentService.getStudentByUserId({ userId: ticket.studentId }).subscribe(
                       (student2: any) => {
-                          ticket.studentNumber = student2.studentNumber
+                        ticket.studentNumber = student2.studentNumber
                       }, err => { console.error(err); });
                   });
                 },
@@ -46,6 +45,9 @@ export class ViewPrecedingTicketsComponent implements OnInit {
             },
             err => { console.error(err); }
           );
+        }
+        else {
+          this.router.navigateByUrl('/home');
         }
       },
       err => { console.error(err); }

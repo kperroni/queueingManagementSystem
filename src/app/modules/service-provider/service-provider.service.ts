@@ -10,11 +10,15 @@ export class ServiceProviderService {
     return this.http.post('shift/createShift', body);
   }
 
-  checkShift(){
+  checkShift() {
     return this.http.get('shift/checkShift');
   }
 
-  finishShift(){
+  finishShift() {
     return this.http.put('shift/finishShift', {});
+  }
+
+  getProviderByUserId(userId) {
+    return this.http.post('serviceProvider/getProviderByUserId', userId);
   }
 }
