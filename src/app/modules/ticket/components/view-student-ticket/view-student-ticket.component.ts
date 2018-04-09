@@ -25,15 +25,12 @@ export class ViewStudentTicketComponent implements OnInit {
       (user: any) => {
         console.log(user);
         if (user.type == 'S') {
-          this.studentService.getStudentByUserId({userId: user._id}).subscribe(
+          this.studentService.getStudentByUserId({ userId: user._id }).subscribe(
             (student: any) => {
-              console.log("is student");
-              console.log(student);
-              console.log(student.studentNumber);
+
 
               this.activeStudent = student;
-
-              this.ticketService.getStudentTicket({body : student}).subscribe(
+              this.ticketService.getStudentTicket({ body: student }).subscribe(
                 (data: any) => {
                   this.activeTickets = data;
                   this.activeTickets.forEach(ticket => {
