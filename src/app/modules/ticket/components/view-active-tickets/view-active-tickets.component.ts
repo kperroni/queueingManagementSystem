@@ -25,22 +25,25 @@ export class ViewActiveTicketsComponent implements OnInit {
     this.userService.getActiveUser().subscribe(
       (user: any) => {
         if (user !== null && user.type == 'E') {
-          console.log("finding sp");
+
           this.serviceProviderService.getProviderByUserId({ userId: user._id }).subscribe(
             (employee: any) => {
-
-              console.log("got one");
 
               this.ticketService.getActiveTickets().subscribe(
                 (activeTickets: any) => {
 
                   this.activeTickets = activeTickets;
                   this.activeTickets.forEach(ticket => {
-                    this.studentService.getStudentByUserId({ userId: ticket.studentId }).subscribe(
+
+                    this.studentService.getStudentByStudentId({ studentId: ticket.studentId }).subscribe(
                       (student2: any) => {
 
-                        if (student2 !== null)
+                        if (student2 !== null) {
                           ticket.studentNumber = student2.studentNumber;
+                        }
+                        else {
+                          console.log("student not found");
+                        }
                       }, err => { console.error(err); });
                   });
                 },
@@ -56,5 +59,9 @@ export class ViewActiveTicketsComponent implements OnInit {
       },
       err => { console.error(err); }
     );
+  }
+
+  onClickTicket(ticketNumber) {
+    //this.ticketService.getTicketByTicketNumber(ticketNumber);
   }
 }

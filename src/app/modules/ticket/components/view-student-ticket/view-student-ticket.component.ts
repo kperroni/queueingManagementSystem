@@ -11,7 +11,6 @@ import { StudentService } from '../../../student/student.service';
 export class ViewStudentTicketComponent implements OnInit {
 
   private activeTicket: any;
-  private activeStudent: any;
 
   private ticketCount: number;
 
@@ -25,27 +24,24 @@ export class ViewStudentTicketComponent implements OnInit {
 
     this.userService.getActiveUser().subscribe(
       (user: any) => {
-        console.log(user);
+
         if (user.type == 'S') {
-          this.studentService.getStudentByUserId({ userId: user._id }).subscribe(
+          this.studentService.getStudentByUserId({ id: user._id }).subscribe(
             (student: any) => {
 
-
-              this.activeStudent = student;
               this.ticketService.getStudentTicket({ body: student }).subscribe(
-                (data: any) => {
+                (studentTicket: any) => {
 
-                  data.studentNumber = student.studentNumber;
+                  studentTicket.studentNumber = student.studentNumber;
                   this.activeTicket = [];
 
-                  console.log(data);
+                  this.activeTicket.push(studentTicket);
 
-                  this.activeTicket.push(data);
+                  this.ticketService.viewPrecedingTickets({ activeStudent: student }).subscribe(
+                    (precedingTickets: any) => {
 
-                  this.ticketService.viewPrecedingTickets({ body: student }).subscribe(
-                    (data: any) => {
-
-                      this.ticketCount = data.length;
+                      console.log(precedingTickets);
+                      this.activeTicket[0].ticketCount = precedingTickets.length;
                     });
                 },
                 err => { console.error(err); }

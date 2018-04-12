@@ -109,7 +109,10 @@ exports.viewActiveTickets = function (req, res, next) {
     console.log("Ticket Controller");
 
     // Use the 'User' instance's 'find' method to retrieve a new user document
-    Ticket.find({ status: 'A' }, function (err, users) {
+    Ticket.find({
+        status: 'A',
+        studentId: { $ne: null }
+    }).sort({ "weight": 1, "ticketNumber": 1 }).exec(function (err, users) {
         if (err) {
             return next(err);
         } else {
@@ -119,26 +122,28 @@ exports.viewActiveTickets = function (req, res, next) {
 };
 
 exports.getPrecedingTickets = function (req, res, next) {
-    console.log("Ticket Controller");
+    console.log("preceding ticket Called");
 
-    if (req.body != null && req.body.type == 'S') {
+    var student = req.body.activeStudent;
 
-        var student = req.body;
+    console.log(student);
 
-        // Use the 'User' instance's 'find' method to retrieve a new user document
-        Ticket.find({
-            status: 'A',
-            studentId: { $ne: student._id },
-            studentId: { $ne: null }
-            //creationTime: { $lte: ticket.creationTime }
-        }, function (err, tickets) {
-            if (err) {
-                return next(err);
-            } else {
-                res.json(tickets);
-            }
-        });
+    // Use the 'User' instance's 'find' method to retrieve a new user document
+    Ticket.find({
+        status: 'A',
+        studentId: { $ne: student._id },
+        studentId: { $ne: null }
+        //weight: { $gte: ticket.weight }
     }
+    ).sort({ "weight": 1, "ticketNumber": 1 }).exec(function (err, tickets) {
+        if (err) {
+            return next(err);
+        } else {
+
+            console.log(tickets);
+            res.json(tickets);
+        }
+    });
 
 };
 
@@ -148,9 +153,11 @@ exports.viewStudentTicket = function (req, res, next) {
     var student = req.body;
 
     // Use the 'User' instance's 'find' method to retrieve a new user document
-    Ticket.findOne({ status: 'A', 
-    studentId: student._id, 
-    studentId: { $ne: null } }, function (err, users) {
+    Ticket.findOne({
+        status: 'A',
+        studentId: student._id,
+        studentId: { $ne: null }
+    }, function (err, users) {
         if (err) {
             return next(err);
         } else {
@@ -158,3 +165,15 @@ exports.viewStudentTicket = function (req, res, next) {
         }
     });
 }
+
+exports.getTicketByTicketNumber = function (req, res, next) {
+
+    Ticket.find({ ticketNumber: req.ticketNumber }).sort({ "weight": 1, "ticketNumber": 1 }).limit(1).exec(function (err, ticket) {
+        const ret = {};
+        if (err) {
+            return res.json({ message: "0", err: err });
+        } else {
+            res.json(ticket);
+        }
+    });
+};
