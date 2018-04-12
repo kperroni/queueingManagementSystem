@@ -3,6 +3,7 @@ import { TicketService } from '../../ticket.service';
 import { Router, NavigationStart } from '@angular/router';
 import { UserService } from '../../../user/user.service';
 import { ServiceProviderService } from '../../../service-provider/service-provider.service';
+import { StudentService } from '../../../student/student.service';
 
 @Component({
   selector: 'app-view-active-tickets',
@@ -16,7 +17,8 @@ export class ViewActiveTicketsComponent implements OnInit {
   constructor(private ticketService: TicketService,
     private userService: UserService,
     private serviceProviderService: ServiceProviderService,
-    private router: Router) { }
+    private router: Router,
+    private studentService: StudentService) { }
 
   ngOnInit() {
 
@@ -24,7 +26,7 @@ export class ViewActiveTicketsComponent implements OnInit {
       (user: any) => {
         if (user !== null && user.type == 'E') {
           console.log("finding sp");
-          this.serviceProviderService.getProviderByUserId({userId : user._id}).subscribe(
+          this.serviceProviderService.getProviderByUserId({ userId: user._id }).subscribe(
             (employee: any) => {
 
               console.log("got one");
@@ -33,6 +35,14 @@ export class ViewActiveTicketsComponent implements OnInit {
                 (activeTickets: any) => {
 
                   this.activeTickets = activeTickets;
+                  this.activeTickets.forEach(ticket => {
+                    this.studentService.getStudentByUserId({ userId: ticket.studentId }).subscribe(
+                      (student2: any) => {
+
+                        if (student2 !== null)
+                          ticket.studentNumber = student2.studentNumber;
+                      }, err => { console.error(err); });
+                  });
                 },
                 err => { console.error(err); }
               );

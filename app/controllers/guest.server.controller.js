@@ -31,3 +31,13 @@ exports.getGuests = function (req, res, next) {
         }
     });
 };
+
+exports.getGuestByGuestId = function (req, res, next) {
+    GuestModel.findOne({ _id: req.body.guestId }, function (err, guest) {
+        if (err) {
+            return next(err);
+        } else {
+            res.json(guest);
+        }
+    });
+};

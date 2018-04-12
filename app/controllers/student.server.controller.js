@@ -34,7 +34,18 @@ exports.getStudents = function (req, res, next) {
 
 exports.getStudentByUserId = function (req, res, next) {
     console.log("controller", "req.body", req.body);
-    StudentModel.findOne({userId:req.body.userId}, function (err, student) {
+    StudentModel.findOne({ userId: req.body.userId }, function (err, student) {
+        if (err) {
+            return next(err);
+        } else {
+            res.json(student);
+        }
+    });
+};
+
+exports.getStudentByStudentId = function (req, res, next) {
+    console.log("controller", "req.body", req.body);
+    StudentModel.findOne({ _id: req.body.studentId }, function (err, student) {
         if (err) {
             return next(err);
         } else {
@@ -45,7 +56,7 @@ exports.getStudentByUserId = function (req, res, next) {
 
 exports.getStudentByStudentNumber = function (req, res, next) {
     console.log("controller", "req.body", req.body);
-    StudentModel.findOne({studentNumber:req.body.studentNumber}, function (err, student) {
+    StudentModel.findOne({ studentNumber: req.body.studentNumber }, function (err, student) {
         if (err) {
             return next(err);
         } else {

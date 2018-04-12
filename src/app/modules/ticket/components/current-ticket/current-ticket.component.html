@@ -38,6 +38,10 @@
     <div class="text-center mt-4">
       <button (click)="onClickUpdateTicket()" class="btn btn-unique">Update Ticket</button>
     </div>
+    <br>
+    <div class="text-center mt-4">
+      <button (click)="onClickCallTicket()" class="btn btn-info">Call Ticket</button>
+    </div>
   </form>
   <ng-template #noActiveTickets>
     <ng-container *ngIf="userType == 'E'; else permissionDenied">There are no active tickets in the system.</ng-container>

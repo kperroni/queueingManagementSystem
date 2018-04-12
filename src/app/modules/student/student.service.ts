@@ -14,4 +14,7 @@ export class StudentService {
     console.log("studentNumber", studentNumber);
     return this.http.post('student/getStudentByStudentNumber', studentNumber);
   }
+  getStudentByStudentId(studentId) {
+    return this.http.post('student/getStudentByStudentId', studentId);
+  }
 }

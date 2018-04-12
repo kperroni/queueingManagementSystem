@@ -8,13 +8,17 @@
       <th>Student Number</th>
       <th>Subject</th>
       <th>Description</th>
+      <th>Status</th>     
+      <th>Preceding Pending Tickets</th>
     </tr>
-    <tr *ngFor = "let ticket of activeTickets">
+    <tr *ngFor="let ticket of activeTicket">
+
       <td>{{ ticket.ticketNumber }}</td>
       <td>{{ ticket.studentNumber }}</td>
       <td>{{ ticket.subject }}</td>
       <td>{{ ticket.description }}</td>
-      
+      <td>{{ ticket.status }}</td>
+      <td>{{ ticketCount }}</td>
     </tr>
   </table>
 </div>

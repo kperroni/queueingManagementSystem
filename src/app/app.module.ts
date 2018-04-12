@@ -23,6 +23,7 @@ import { MessageService } from './shared/services/messages/message.service';
 import { CurrentTicketComponent } from './modules/ticket/components/current-ticket/current-ticket.component';
 import { StudentService } from './modules/student/student.service';
 import { ViewPrecedingTicketsComponent } from './modules/ticket/components/view-preceding-tickets/view-preceding-tickets.component';
+import { GuestService } from './modules/guest/guest.service';
 import { ViewServicesComponent } from './modules/service/view-services/view-services.component';
 import { StartShiftComponent } from './modules/service-provider/components/shift/shift.component';
 import { ServiceProviderService } from './modules/service-provider/service-provider.service';
@@ -81,6 +82,7 @@ const appRoutes: Routes = [
     TicketService,
     ServiceService,
     StudentService,
+    GuestService,
     ServiceProviderService,
     QueueService,
     CounterService,
