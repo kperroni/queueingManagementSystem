@@ -33,12 +33,11 @@ exports.getServices = function (req, res, next) {
 };
 
 exports.getServiceById = function (req, res, next) {
-    console.log("controller", "getServices");
-    Service.findOne({ _id: req.body._id }, function (err, service) {
+
+    Service.findOne({ _id: req.body.id }, function (err, service) {
         if (err) {
             return next(err);
         } else {
-            console.log("service", service);
             res.json(service);
         }
     });

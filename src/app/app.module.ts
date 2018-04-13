@@ -30,6 +30,7 @@ import { ServiceProviderService } from './modules/service-provider/service-provi
 import { QueueService } from './modules/queue/queue.service';
 import { CounterService } from './modules/counter/counter.service';
 import {ViewStudentTicketComponent} from './modules/ticket/components/view-student-ticket/view-student-ticket.component';
+import { GuestActiveTicketComponent } from './modules/guest/components/guest-active-ticket/guest-active-ticket.component';
 
 const appRoutes: Routes = [
 
@@ -63,7 +64,8 @@ const appRoutes: Routes = [
     ViewServicesComponent,
     ViewServicesComponent,
     StartShiftComponent,
-    ViewStudentTicketComponent
+    ViewStudentTicketComponent,
+    GuestActiveTicketComponent
   ],
 
   imports: [

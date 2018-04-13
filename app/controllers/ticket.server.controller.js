@@ -106,7 +106,6 @@ exports.updateCurrentTicket = function (req, res, next) {
 };
 
 exports.viewActiveTickets = function (req, res, next) {
-    console.log("Ticket Controller");
 
     // Use the 'User' instance's 'find' method to retrieve a new user document
     Ticket.find({
@@ -122,11 +121,7 @@ exports.viewActiveTickets = function (req, res, next) {
 };
 
 exports.getPrecedingTickets = function (req, res, next) {
-    console.log("preceding ticket Called");
-
     var student = req.body.activeStudent;
-
-    console.log(student);
 
     // Use the 'User' instance's 'find' method to retrieve a new user document
     Ticket.find({
@@ -134,13 +129,10 @@ exports.getPrecedingTickets = function (req, res, next) {
         studentId: { $ne: student._id },
         studentId: { $ne: null }
         //weight: { $gte: ticket.weight }
-    }
-    ).sort({ "weight": 1, "ticketNumber": 1 }).exec(function (err, tickets) {
+    }).lean().exec(function (err, tickets) {
         if (err) {
             return next(err);
         } else {
-
-            console.log(tickets);
             res.json(tickets);
         }
     });
@@ -148,8 +140,6 @@ exports.getPrecedingTickets = function (req, res, next) {
 };
 
 exports.viewStudentTicket = function (req, res, next) {
-    console.log("Ticket Controller");
-
     var student = req.body;
 
     // Use the 'User' instance's 'find' method to retrieve a new user document
@@ -157,11 +147,11 @@ exports.viewStudentTicket = function (req, res, next) {
         status: 'A',
         studentId: student._id,
         studentId: { $ne: null }
-    }, function (err, users) {
+    }, function (err, ticket) {
         if (err) {
             return next(err);
         } else {
-            res.json(users);
+            res.json(ticket);
         }
     });
 }

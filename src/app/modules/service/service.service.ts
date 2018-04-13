@@ -14,7 +14,7 @@ export class ServiceService {
     return this.http.post('service/updateService', service);
   }
 
-  getServiceById(body) {
-    return this.http.post('service/getServiceById', body);
+  getServiceById(id) {
+    return this.http.post('service/getServiceById', id);
   }
 }
