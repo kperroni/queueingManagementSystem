@@ -102,8 +102,8 @@ exports.getCurrentTicket = function (req, res, next) {
         },
         {
             "$sort": {
-                'joinedTickets.weight': 1,
-                'joinedTickets.ticketNumber': 1
+                'weight': 1,
+                'ticketNumber': 1
             }
         }
     ], function (err, tickets) {
@@ -182,8 +182,8 @@ exports.getActiveTicketsInQueue = function (req, res, next) {
         },
         {
             "$sort": {
-                'joinedTickets.weight': 1,
-                'joinedTickets.ticketNumber': 1
+                'weight': 1,
+                'ticketNumber': 1
             }
         }
     ], function (err, tickets) {
