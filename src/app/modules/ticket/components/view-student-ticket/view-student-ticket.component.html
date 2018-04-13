@@ -8,8 +8,9 @@
       <th>Student Number</th>
       <th>Subject</th>
       <th>Description</th>
-      <th>Status</th>     
-      <th>Preceding Pending Tickets</th>
+      <th>Status</th>
+      <th>Preceding Tickets</th>
+      <th>Average Waiting Time</th>
     </tr>
     <tr *ngFor="let ticket of activeTicket">
 
@@ -19,6 +20,8 @@
       <td>{{ ticket.description }}</td>
       <td>{{ ticket.status }}</td>
       <td>{{ ticket.ticketCount }}</td>
+      <td>
+        <label ng-if="ticket.hours>0">{{ ticket.hours }} hr(s)</label> {{ticket.minutes}} min(s) </td>
     </tr>
   </table>
 </div>

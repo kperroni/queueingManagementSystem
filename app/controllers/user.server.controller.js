@@ -54,14 +54,14 @@ exports.logIn = function (req, res, next) {
 
 exports.logOut = function (req, res, next) {
     req.logout();
-    res.json({message:"1"});
+    res.json({ message: "1" });
 }
 
-exports.getUserSession = function (req, res, next){
-    if(req.user){
+exports.getUserSession = function (req, res, next) {
+    if (req.user) {
         res.json(req.user);
     }
-    else{
+    else {
         res.json(null);
     }
 }
@@ -69,7 +69,7 @@ exports.getUserSession = function (req, res, next){
 // Create a new 'getActiveUser' controller method
 exports.getActiveUser = function (req, res, next) {
     console.log("controller", "getActiveUser", req.user.id);
-    User.findOne({_id:req.user.id}, function (err, user) {
+    User.findOne({ _id: req.user.id }, function (err, user) {
         if (err) {
             return next(err);
         } else {
@@ -81,7 +81,7 @@ exports.getActiveUser = function (req, res, next) {
 
 exports.getUserById = function (req, res, next) {
     console.log("controller", "getUserById", req.body);
-    User.findOne({_id:req.body._id}, function (err, user) {
+    User.findOne({ _id: req.body._id }, function (err, user) {
         if (err) {
             return next(err);
         } else {

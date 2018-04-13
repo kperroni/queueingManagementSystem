@@ -10,6 +10,7 @@ exports.createCounter = function (req, res, next) {
             res.json(counter);
         }
     });
+    
 };
 
 exports.getCounters = function (req, res, next) {

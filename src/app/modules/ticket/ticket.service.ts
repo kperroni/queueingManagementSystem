@@ -33,7 +33,7 @@ export class TicketService {
     return this.http.post('ticket/getStudentTicket', body);
   }
 
-  getTicketByTicketNumber(ticketNumber){
+  getTicketByTicketNumber(ticketNumber) {
     return this.http.post('ticket/getTicketByTicketNumber', ticketNumber);
   }
 }
