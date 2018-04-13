@@ -95,7 +95,7 @@ exports.getCurrentTicket = function (req, res, next) {
                     "if": {
                         "$eq": ["$services.queueId", ObjectId(req.body.queueId)]
                     },
-                    "then": "$$DESCEND",
+                    "then": "$$KEEP",
                     "else": "$$PRUNE"
                 }
             }
@@ -175,7 +175,7 @@ exports.getActiveTicketsInQueue = function (req, res, next) {
                     "if": {
                         "$eq": ["$services.queueId", ObjectId(req.body.queueId)]
                     },
-                    "then": "$$DESCEND",
+                    "then": "$$KEEP",
                     "else": "$$PRUNE"
                 }
             }
