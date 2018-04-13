@@ -36,34 +36,33 @@ export class CurrentTicketComponent implements OnInit {
       (data: any) => {
         this.currentShift = data[0];
         console.log("currentShiftId", this.currentShift._id);
-      },
-      err => { console.error(err); }
-    );
-
-    this.ticketService.getCurrentActiveTicket().subscribe(
-      (data: any) => {
-        this.stringMsg = data.message;
-        switch (this.stringMsg) {
-          case '0':
-            this.currentTicket = null;
-            console.log("Some error occured!");
-          case '1':
-            this.currentTicket = data.ticket[0];
-            this.userService.getUserById({ _id: this.currentTicket.userId }).subscribe(
-              (data2: any) => {
-                if (data2 != null) {
-                  this.currentTicket.username = data2.username;
-                  this.serviceService.getServiceById({ _id: this.currentTicket.serviceId }).subscribe(
-                    (data3: any) => {
-                      if (data3 != null) {
-                        this.currentTicket.service = data3.name;
-                      }
+        if (this.currentShift) {
+          this.ticketService.getCurrentActiveTicket(this.currentShift).subscribe(
+            (data1: any) => {
+              if (data1.length > 0) {
+                this.currentTicket = data1[0];
+                this.userService.getUserById({ _id: this.currentTicket.userId }).subscribe(
+                  (data2: any) => {
+                    if (data2 != null) {
+                      this.currentTicket.username = data2.username;
+                      this.serviceService.getServiceById({ _id: this.currentTicket.serviceId }).subscribe(
+                        (data3: any) => {
+                          if (data3 != null) {
+                            this.currentTicket.service = data3.name;
+                          }
+                        }
+                      );
                     }
-                  )
-                }
+                  }
+                );
               }
-            )
-            console.log(this.currentTicket);
+              else {
+                this.currentTicket = null;
+              }
+              console.log(this.currentTicket);
+            },
+            err => { console.error(err); }
+          );
         }
       },
       err => { console.error(err); }

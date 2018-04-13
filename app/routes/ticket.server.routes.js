@@ -4,15 +4,17 @@ module.exports = function (app) {
     //handle the routing of get and post request
     app.post('/ticket/createTicket', ticketController.createTicket);
 
-    app.get('/ticket/getCurrentTicket', ticketController.getCurrentTicket);
+    app.post('/ticket/getCurrentTicket', ticketController.getCurrentTicket);
 
     app.get('/ticket/getActiveTickets', ticketController.viewActiveTickets);
 
     app.post('/ticket/updateCurrentTicket', ticketController.updateCurrentTicket);
-    
+
     app.post('/ticket/viewPrecedingTickets', ticketController.getPrecedingTickets);
-    
+
     app.post('/ticket/getStudentTicket', ticketController.viewStudentTicket);
-    
+
     app.post('/ticket/getTicketByTicketNumber', ticketController.getTicketByTicketNumber);
+
+    app.post('/ticket/getActiveTicketsInQueue', ticketController.getActiveTicketsInQueue);
 };
