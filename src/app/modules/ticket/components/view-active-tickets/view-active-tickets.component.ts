@@ -13,6 +13,7 @@ import { StudentService } from '../../../student/student.service';
 export class ViewActiveTicketsComponent implements OnInit {
 
   private activeTickets: any;
+  private currentShift: any;
 
   constructor(private ticketService: TicketService,
     private userService: UserService,
@@ -21,31 +22,34 @@ export class ViewActiveTicketsComponent implements OnInit {
     private studentService: StudentService) { }
 
   ngOnInit() {
-
     this.userService.getActiveUser().subscribe(
       (user: any) => {
         if (user !== null && user.type == 'E') {
-
           this.serviceProviderService.getProviderByUserId({ userId: user._id }).subscribe(
             (employee: any) => {
-
-              this.ticketService.getActiveTickets().subscribe(
-                (activeTickets: any) => {
-
-                  this.activeTickets = activeTickets;
-                  this.activeTickets.forEach(ticket => {
-
-                    this.studentService.getStudentByStudentId({ studentId: ticket.studentId }).subscribe(
-                      (student2: any) => {
-
-                        if (student2 !== null) {
-                          ticket.studentNumber = student2.studentNumber;
-                        }
-                        else {
-                          console.log("student not found");
-                        }
-                      }, err => { console.error(err); });
-                  });
+              this.serviceProviderService.checkShift().subscribe(
+                (shifts: any) => {
+                  this.currentShift = shifts[0];
+                  if (this.currentShift !== null) {
+                    this.ticketService.getActiveTicketsInQueue(this.currentShift).subscribe(
+                      (tickets: any) => {
+                        this.activeTickets = tickets;
+                        this.activeTickets.forEach(ticket => {
+                          this.studentService.getStudentByStudentId({ studentId: ticket.studentId }).subscribe(
+                            (student2: any) => {
+                              if (student2 !== null) {
+                                ticket.studentNumber = student2.studentNumber;
+                              }
+                              else {
+                                console.log("student not found");
+                              }
+                            }, err => { console.error(err); }
+                          );
+                        });
+                      },
+                      err => { console.error(err); }
+                    );
+                  }
                 },
                 err => { console.error(err); }
               );

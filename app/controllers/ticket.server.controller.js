@@ -1,10 +1,11 @@
 // Load the 'Ticket' Mongoose model
-var Ticket = require('mongoose').model('Ticket');
-var User = require('mongoose').model('User');
-var Guest = require('mongoose').model('Guest');
-var Service = require('mongoose').model('Service');
-var serviceC = require('../controllers/service.server.controller');
-var userC = require('../controllers/user.server.controller');
+var Mongoose = require('mongoose');
+var Ticket = Mongoose.model('Ticket');
+var User = Mongoose.model('User');
+var Guest = Mongoose.model('Guest');
+var Service = Mongoose.model('Service');
+var Queue = Mongoose.model('Queue');
+var ObjectId = require('mongodb').ObjectId; 
 
 exports.createTicket = function (req, res, next) {
     console.log("Ticket Controller");
@@ -67,21 +68,50 @@ exports.createTicket = function (req, res, next) {
 };
 
 exports.getCurrentTicket = function (req, res, next) {
-    if (req.user.type != null) {
-        console.log("req.user.type", req.user.type);
-    }
-
-    Ticket.find({ "status": 'A' }).sort({ "weight": 1, "ticketNumber": 1 }).limit(1).exec(function (err, retobj) {
-        const ret = {};
+    console.log("body", req.body);
+    Ticket.aggregate([
+        {
+            "$match": { "status": 'A' }
+        },
+        {
+            "$limit": 1
+        },
+        {
+            "$lookup": {
+                "from": "services",
+                "localField": "serviceId",
+                "foreignField": "_id",
+                "as": "services"
+            }
+        },
+        {
+            "$unwind": {
+                "path": "$services"
+            }
+        },
+        {
+            "$redact": {
+                "$cond": {
+                    "if": {
+                        "$eq": ["$services.queueId", ObjectId(req.body.queueId)]
+                    },
+                    "then": "$$KEEP",
+                    "else": "$$PRUNE"
+                }
+            }
+        },
+        {
+            "$sort": {
+                'weight': 1,
+                'ticketNumber': 1
+            }
+        }
+    ], function (err, tickets) {
         if (err) {
-            return res.json({ message: "0", err: err });
+            return next(err);
         } else {
-            if (req.user.type == 'E') {
-                res.json({ message: "1", ticket: retobj, userType: req.user.type });
-            }
-            else {
-                res.json({ message: "1", ticket: ret, userType: req.user.type });
-            }
+            console.log("tickets", tickets);
+            res.json(tickets);
         }
     });
 };
@@ -109,8 +139,7 @@ exports.viewActiveTickets = function (req, res, next) {
 
     // Use the 'User' instance's 'find' method to retrieve a new user document
     Ticket.find({
-        status: 'A',
-        studentId: { $ne: null }
+        status: 'A'
     }).sort({ "weight": 1, "ticketNumber": 1 }).exec(function (err, users) {
         if (err) {
             return next(err);
@@ -119,6 +148,52 @@ exports.viewActiveTickets = function (req, res, next) {
         }
     });
 };
+
+exports.getActiveTicketsInQueue = function (req, res, next) {
+    console.log("body", req.body);
+    Ticket.aggregate([
+        {
+            "$match": { "status": 'A' }
+        },
+        {
+            "$lookup": {
+                "from": "services",
+                "localField": "serviceId",
+                "foreignField": "_id",
+                "as": "services"
+            }
+        },
+        {
+            "$unwind": {
+                "path": "$services"
+            }
+        },
+        {
+            "$redact": {
+                "$cond": {
+                    "if": {
+                        "$eq": ["$services.queueId", ObjectId(req.body.queueId)]
+                    },
+                    "then": "$$KEEP",
+                    "else": "$$PRUNE"
+                }
+            }
+        },
+        {
+            "$sort": {
+                'weight': 1,
+                'ticketNumber': 1
+            }
+        }
+    ], function (err, tickets) {
+        if (err) {
+            return next(err);
+        } else {
+            console.log("tickets", tickets);
+            res.json(tickets);
+        }
+    });
+}
 
 exports.getPrecedingTickets = function (req, res, next) {
     var student = req.body.activeStudent;
@@ -157,7 +232,6 @@ exports.viewStudentTicket = function (req, res, next) {
 }
 
 exports.getTicketByTicketNumber = function (req, res, next) {
-
     Ticket.find({ ticketNumber: req.ticketNumber }).sort({ "weight": 1, "ticketNumber": 1 }).limit(1).exec(function (err, ticket) {
         const ret = {};
         if (err) {
