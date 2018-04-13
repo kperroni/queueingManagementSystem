@@ -15,13 +15,17 @@ export class TicketService {
     return this.http.get('ticket/getActiveTickets');
   }
 
+  getActiveTicketsInQueue(body) {
+    return this.http.post('ticket/getActiveTicketsInQueue', body);
+  }
+
   viewPrecedingTickets(activeStudent) {
     return this.http.post('ticket/viewPrecedingTickets', activeStudent);
   }
 
-  getCurrentActiveTicket() {
+  getCurrentActiveTicket(body) {
     console.log("getting current ticket");
-    return this.http.get('ticket/getCurrentTicket');
+    return this.http.post('ticket/getCurrentTicket', body);
   }
 
   updateCurrentTicket(body) {
@@ -33,7 +37,7 @@ export class TicketService {
     return this.http.post('ticket/getStudentTicket', body);
   }
 
-  getTicketByTicketNumber(ticketNumber){
+  getTicketByTicketNumber(ticketNumber) {
     return this.http.post('ticket/getTicketByTicketNumber', ticketNumber);
   }
 }
