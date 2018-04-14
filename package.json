@@ -37,6 +37,7 @@
     "mongodb": "^3.0.4",
     "mongoose": "^5.0.11",
     "morgan": "^1.9.0",
+    "nodemailer": "^4.6.4",
     "nodemon": "^1.17.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
