@@ -74,9 +74,6 @@ exports.getCurrentTicket = function (req, res, next) {
             "$match": { "status": 'A' }
         },
         {
-            "$limit": 1
-        },
-        {
             "$lookup": {
                 "from": "services",
                 "localField": "serviceId",
@@ -105,6 +102,9 @@ exports.getCurrentTicket = function (req, res, next) {
                 'weight': 1,
                 'ticketNumber': 1
             }
+        },
+        {
+            "$limit": 1
         }
     ], function (err, tickets) {
         if (err) {
@@ -121,7 +121,7 @@ exports.updateCurrentTicket = function (req, res, next) {
 
     var query = { "ticketNumber": req.body.ticketNumber },
         updateQ = {
-            '$set': { 'status': req.body.status },
+            '$set': { 'status': req.body.status, 'serviceId': req.body.serviceId },
             '$addToSet': { 'details': { 'shiftId': req.body.currentShiftId, 'actions': req.body.detailActions } }
         },
         options = { new: true };
