@@ -21,6 +21,7 @@ export class CurrentTicketComponent implements OnInit {
   private stringMsg: any;
   private currentShift: any;
   private services: any;
+  private selectedAction: any;
 
   constructor(private ticketService: TicketService, private providerService: ServiceProviderService, private userService: UserService,
     private serviceService: ServiceService, private guestService: GuestService, private studentService: StudentService, private counterService: CounterService,
@@ -42,6 +43,9 @@ export class CurrentTicketComponent implements OnInit {
             (data1: any) => {
               if (data1.length > 0) {
                 this.currentTicket = data1[0];
+                if (this.currentTicket.details.length > 0) {
+                  this.selectedAction = this.currentTicket.details[0].actions;
+                }
                 this.userService.getUserById({ _id: this.currentTicket.userId }).subscribe(
                   (data2: any) => {
                     this.currentTicket.username = data2.username;
