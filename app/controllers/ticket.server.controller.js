@@ -5,7 +5,9 @@ var User = Mongoose.model('User');
 var Guest = Mongoose.model('Guest');
 var Service = Mongoose.model('Service');
 var Queue = Mongoose.model('Queue');
-var ObjectId = require('mongodb').ObjectId; 
+var ObjectId = require('mongodb').ObjectId;
+var Student = Mongoose.model('Student');
+var mail = require('./mail.server.controller');
 
 exports.createTicket = function (req, res, next) {
     console.log("Ticket Controller");
@@ -130,6 +132,7 @@ exports.updateCurrentTicket = function (req, res, next) {
         if (err) {
             return res.json({ message: "0", err: err });
         } else {
+            sendNotification(req.body.serviceId);
             res.json({ message: "1", ticket: retobj });
         }
     });
@@ -150,7 +153,6 @@ exports.viewActiveTickets = function (req, res, next) {
 };
 
 exports.getActiveTicketsInQueue = function (req, res, next) {
-    console.log("body", req.body);
     Ticket.aggregate([
         {
             "$match": { "status": 'A' }
@@ -189,8 +191,11 @@ exports.getActiveTicketsInQueue = function (req, res, next) {
         if (err) {
             return next(err);
         } else {
-            console.log("tickets", tickets);
-            res.json(tickets);
+            if (req.callback) {
+                next(tickets);
+            } else {
+                res.json(tickets);
+            }
         }
     });
 }
@@ -241,3 +246,69 @@ exports.getTicketByTicketNumber = function (req, res, next) {
         }
     });
 };
+
+var sendNotification = function (serviceId) {
+    const ticketsLimit = 3;
+    Service.findById(serviceId, function (err, service) {
+        console.log("sendNotification", "service", service);
+        if (!err) {
+            var req = {
+                body: { queueId: service.queueId },
+                callback: true
+            }
+            var res = {};
+            module.exports.getActiveTicketsInQueue(req, res, function (tickets) {
+                console.log("tickets in Queue", tickets.length);
+
+                notificableTickets = [];
+                for (var i = 0; i < ticketsLimit && i < tickets.length; i++) {
+                    notificableTickets.push(tickets[i]);
+                }
+
+                console.log("array", notificableTickets);
+
+                notificableTickets.forEach(ticket => {
+
+                    console.log("ticket.studentId:", ticket.studentId);
+
+                    if (ticket.studentId != null) {
+                        Student.findOne({ _id: ticket.studentId }, function (err, student) {
+                            if (!err) {
+                                User.findOne({ _id: student.userId }, function (err, user) {
+                                    if (!err) {
+                                        reqMail = {
+                                            to: user.email,
+                                            subject: "Qme (no reply) - Ticket notification",
+                                            text: "Hello " + user.firstName + ", \n" +
+                                                "Your ticket number " + ticket.ticketNumber + " is close to be called, please approach to the service area."
+                                        }
+                                        mail.sendEmail(reqMail, null, null);
+                                    }
+                                })
+                            }
+
+                        });
+                    }
+
+                    if (ticket.guestId != null) {
+                        console.log("guestId", ticket.guestId);
+                        Guest.findOne({ _id: ticket.guestId }, function (err, guest) {
+                            if (guest.email != null) {
+                                reqMail = {
+                                    to: guest.email,
+                                    subject: "Qme (no reply) - Ticket notification",
+                                    text: "Hello " + guest.firstName + ", \n" +
+                                        "Your ticket number " + ticket.ticketNumber + " is close to be called, please approach to the service area."
+                                }
+                                mail.sendEmail(reqMail, null, null);
+                            }
+                        });
+                    }
+
+                });
+
+            });
+
+        }
+    });
+}

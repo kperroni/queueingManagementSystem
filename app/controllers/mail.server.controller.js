@@ -3,9 +3,9 @@ const transporter = require('../config/email');
 exports.sendEmail = function (req, res, next) {
     var mailOptions = {
         from: 'qmenotifier@gmail.com',
-        to: 'kenny.perroni@gmail.com',
-        subject: 'Sending Email using Node.js',
-        text: 'That was easy again!'
+        to: req.to,
+        subject: req.subject,
+        text: req.text
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
