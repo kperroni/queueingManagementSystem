@@ -20,6 +20,7 @@ export class CurrentTicketComponent implements OnInit {
   private currentTicket: any;
   private stringMsg: any;
   private currentShift: any;
+  private services: any;
 
   constructor(private ticketService: TicketService, private providerService: ServiceProviderService, private userService: UserService,
     private serviceService: ServiceService, private guestService: GuestService, private studentService: StudentService, private counterService: CounterService,
@@ -35,24 +36,21 @@ export class CurrentTicketComponent implements OnInit {
     this.providerService.checkShift().subscribe(
       (data: any) => {
         this.currentShift = data[0];
-        console.log("currentShiftId", this.currentShift._id);
         if (this.currentShift) {
+          console.log("currentShiftId", this.currentShift._id);
           this.ticketService.getCurrentActiveTicket(this.currentShift).subscribe(
             (data1: any) => {
               if (data1.length > 0) {
                 this.currentTicket = data1[0];
                 this.userService.getUserById({ _id: this.currentTicket.userId }).subscribe(
                   (data2: any) => {
-                    if (data2 != null) {
-                      this.currentTicket.username = data2.username;
-                      this.serviceService.getServiceById({ _id: this.currentTicket.serviceId }).subscribe(
-                        (data3: any) => {
-                          if (data3 != null) {
-                            this.currentTicket.service = data3.name;
-                          }
-                        }
-                      );
-                    }
+                    this.currentTicket.username = data2.username;
+                    this.serviceService.getServices().subscribe(
+                      (data3: any) => {
+                        this.services = data3;
+                        console.log("services", this.services);
+                      }
+                    );
                   }
                 );
               }

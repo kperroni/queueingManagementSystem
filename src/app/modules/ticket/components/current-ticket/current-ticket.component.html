@@ -13,8 +13,10 @@
     </select>
     <br>
     <br>
-    <label for="service" class="grey-text">Service</label>
-    <input type="text" name="service" class="form-control" value="{{ currentTicket.service }}" disabled>
+    <label for="serviceId" class="black-text">Service</label>
+    <select [(ngModel)]="currentTicket.serviceId" name="serviceId" class="mdb-select">
+      <option *ngFor='let service of services' [value]="service._id">{{ service.name }}</option>
+  </select>
     <br>
     <label for="username" class="grey-text">Submitted by</label>
     <input type="text" name="username" class="form-control" value="{{ currentTicket.username }}" disabled>
@@ -22,11 +24,11 @@
     <label for="subject" class="grey-text">Subject</label>
     <input type="text" name="subject" class="form-control" value="{{ currentTicket.subject }}" disabled>
     <br>
-    <label for="description" class="black-text">Ticket Description</label>
+    <label for="description" class="grey-text">Ticket Description</label>
     <textarea name="description" class="form-control" rows="4" readonly>{{ currentTicket.description }}</textarea>
     <br>
     <div style="display: none;">
-      <label for="currentShiftId" class="black-text">Shift ID</label>
+      <label for="currentShiftId" class="grey-text">Shift ID</label>
       <input type="text" [(ngModel)]="currentTicket.currentShiftId" name="currentShiftId" class="form-control" value="{{ currentShift._id }}"
         disabled>
       <br>
@@ -44,7 +46,7 @@
     </div>
   </form>
   <ng-template #noActiveTickets>
-    <ng-container *ngIf="currentShift; else noShift">There are no active tickets in the system.</ng-container>
+    <ng-container *ngIf="currentShift; else noShift">There are no active tickets in the current queue.</ng-container>
   </ng-template>
   <ng-template #noShift>Please start a shift!</ng-template>
 </div>
