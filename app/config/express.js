@@ -63,7 +63,8 @@ module.exports = function () {
     require('../routes/shift.server.routes')(app);
     require('../routes/counter.server.routes')(app);
     require('../routes/serviceProvider.server.routes')(app);
-    
+    require('../routes/mail.server.routes')(app);
+
     // most be the last one
     require('../routes/index.server.routes')(app);
 
