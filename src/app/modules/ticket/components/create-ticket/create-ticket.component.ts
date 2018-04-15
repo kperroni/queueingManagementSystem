@@ -15,7 +15,7 @@ import { ToasterService } from 'angular5-toaster';
 })
 export class CreateTicketComponent implements OnInit {
 
-  user:any;
+  user: any;
 
   typeCustomer: any;
 
@@ -42,37 +42,37 @@ export class CreateTicketComponent implements OnInit {
 
   services: any[]; // Eventually it should be an array of User (Class)
   error: any;
-   
+
   constructor(
-    private ticketService: TicketService, 
+    private ticketService: TicketService,
     private serviceService: ServiceService,
-    private studentService: StudentService, 
-    private userService: UserService, 
-    private router: Router, 
-    private message: MessageService, 
-    private toaster: ToasterService) { 
+    private studentService: StudentService,
+    private userService: UserService,
+    private router: Router,
+    private message: MessageService,
+    private toaster: ToasterService) {
 
-      this.userService.getActiveUser().subscribe(
-        (data:any[]) => {
-          this.user = data;
-          if(this.user.type == 'S') {
-            this.studentInformation = this.user.firstName + " " + this.user.lastName;
-            this.studentService.getStudentByUserId({userId:this.user._id}).subscribe(
-              (data:any) => {
-                if(data != null) {
-                  this.ticket.studentId = data._id;
-                  this.studentInformation = data.studentNumber + " - " + this.studentInformation + ", program: " + data.program;
-                } else {
-                  this.studentInformation = '';
-                }
+    this.userService.getActiveUser().subscribe(
+      (data: any[]) => {
+        this.user = data;
+        if (this.user.type == 'S') {
+          this.studentInformation = this.user.firstName + " " + this.user.lastName;
+          this.studentService.getStudentByUserId({ userId: this.user._id }).subscribe(
+            (data: any) => {
+              if (data != null) {
+                this.ticket.studentId = data._id;
+                this.studentInformation = data.studentNumber + " - " + this.studentInformation + ", program: " + data.program;
+              } else {
+                this.studentInformation = '';
               }
-            )
-          }
-        },
-        err => {console.error(err)}
-      );
+            }
+          )
+        }
+      },
+      err => { console.error(err) }
+    );
 
-    }
+  }
 
   ngOnInit() {
     this.typeCustomer = "Student";
@@ -80,30 +80,30 @@ export class CreateTicketComponent implements OnInit {
     this.customer.firstName = '';
     this.customer.lastName = '';
     this.customer.email = '';
-    this.user = {type:''}; // initialize to avoid the error meanwhile the function recover the actual value and override it.
+    this.user = { type: '' }; // initialize to avoid the error meanwhile the function recover the actual value and override it.
 
     this.serviceService.getServices().subscribe(
-      (data:any[]) => {
+      (data: any[]) => {
         this.services = data;
       },
-      err => {console.error(err)}
+      err => { console.error(err) }
     );
     this.ticket.subject = "";
     this.ticket.description = "";
   }
-  
-  onClickCreateTicket(){
+
+  onClickCreateTicket() {
     // preparing the object to send to the server
     let sendObj = {
-      ticket:this.ticket,
-      guest:null
+      ticket: this.ticket,
+      guest: null
     };
-    if(this.user.type == 'E') {
-      if(this.typeCustomer == 'Guest') {
+    if (this.user.type == 'E') {
+      if (this.typeCustomer == 'Guest') {
         sendObj.guest = {
-          firstName:this.customer.firstName,
-          lastName:this.customer.lastName,
-          email:this.customer.email
+          firstName: this.customer.firstName,
+          lastName: this.customer.lastName,
+          email: this.customer.email
         }
       }
     }
@@ -131,13 +131,13 @@ export class CreateTicketComponent implements OnInit {
 
   onKeyup(event: KeyboardEvent) {
     this.studentInformation = "";
-    this.studentService.getStudentByStudentNumber({studentNumber:this.customer.studentNumber}).subscribe(
-      (data:any) => {
-        if(data != null) {
+    this.studentService.getStudentByStudentNumber({ studentNumber: this.customer.studentNumber }).subscribe(
+      (data: any) => {
+        if (data != null) {
           this.ticket.studentId = data._id;
-          this.userService.getUserById({_id:data.userId}).subscribe(
-            (data2:any) => {
-              if(data2 != null) {
+          this.userService.getUserById({ _id: data.userId }).subscribe(
+            (data2: any) => {
+              if (data2 != null) {
                 this.studentInformation = data2.firstName + " " + data2.lastName + ", program: " + data.program;
               }
             }

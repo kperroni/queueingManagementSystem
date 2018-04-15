@@ -16,7 +16,7 @@
     <label for="serviceId" class="black-text">Service</label>
     <select [(ngModel)]="currentTicket.serviceId" name="serviceId" class="mdb-select">
       <option *ngFor='let service of services' [value]="service._id">{{ service.name }}</option>
-  </select>
+    </select>
     <br>
     <label for="username" class="grey-text">Submitted by</label>
     <input type="text" name="username" class="form-control" value="{{ currentTicket.username }}" disabled>

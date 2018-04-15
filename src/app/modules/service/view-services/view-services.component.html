@@ -14,16 +14,17 @@
       <td>{{ service.name }}</td>
       <td>{{ service.description }}</td>
       <td>
-        <input [(ngModel)]="service.averageMinutes" type="number" >
+        <input [(ngModel)]="service.averageMinutes" type="number">
       </td>
       <td>
         <input [(ngModel)]="service.weight" type="number">
       </td>
     </tr>
   </table>
-
-  <div class="text-center">
-      <button (click)="onClickSave()" class="btn btn-unique waves-light" mdbRippleRadius>Save <i class="fa fa-save ml-1"></i></button>
+  <div class="text-center pb-3">
+    <button (click)="onClickSave()" class="btn btn-unique waves-light" mdbRippleRadius>Save
+      <i class="fa fa-save ml-1"></i>
+    </button>
   </div>
-
+  <div class="pb-5"></div>
 </div>

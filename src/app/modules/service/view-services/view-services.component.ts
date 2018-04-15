@@ -16,22 +16,22 @@ export class ViewServicesComponent implements OnInit {
 
   ngOnInit() {
     this.serviceService.getServices().subscribe(
-      (data:any[]) => {
+      (data: any[]) => {
         this.services = data;
       },
-      err => {console.error(err)}
+      err => { console.error(err); }
     );
   }
 
-  onClickSave(){
+  onClickSave() {
     this.servicesUpdated = 0;
     this.services.forEach(service => {
       this.serviceService.updateService(service).subscribe(
-        (data:any) => {
+        (data: any) => {
           this.servicesUpdated = this.servicesUpdated + 1;
         },
-        err => {console.error(err)}
-      )
+        err => { console.error(err); }
+      );
     });
     this.toaster.pop('success', 'Qme', 'Services updated');
   }

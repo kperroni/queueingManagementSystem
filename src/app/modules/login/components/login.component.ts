@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   password: String;
 
   constructor(private userService: UserService, private router: Router,
-     private message: MessageService, private toaster: ToasterService) { }
+    private message: MessageService, private toaster: ToasterService) { }
 
   ngOnInit() {
   }
@@ -32,12 +32,12 @@ export class LoginComponent implements OnInit {
             }
             case '1': {
               this.userService.getUserSession()
-              .subscribe(
-                (data: any) => {
-                  this.message.setMessage('success', 'Qme', 'Welcome! ' + data.firstName);
-                  this.router.navigate(['/home']);
-                }
-              );
+                .subscribe(
+                  (data: any) => {
+                    this.message.setMessage('success', 'Qme', 'Welcome! ' + data.firstName);
+                    this.router.navigate(['/home']);
+                  }
+                );
               break;
             }
           }
