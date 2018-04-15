@@ -23,6 +23,7 @@
         "../node_modules/angular-bootstrap-md/scss/bootstrap/bootstrap.scss",
         "../node_modules/angular-bootstrap-md/scss/mdb-free.scss",
         "../node_modules/angular5-toaster/dist/toaster.css",
+        "../node_modules/flag-icon-css/css/flag-icon.min.css",
         "styles.scss"
       ],
       "scripts": [

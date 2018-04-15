@@ -1,38 +1,34 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http'
-import 'rxjs/add/operator/map'
+import { HttpClient } from '@angular/common/http';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class UserService {
 
-  username:String;
-  result:any;
+  username: String;
+  result: any;
   constructor(private http: HttpClient) { }
 
-  getUsers()
-  {
+  getUsers() {
     return this.http.get('user/getUsers');
   }
 
-  getActiveUser()
-  {
+  getActiveUser() {
     return this.http.get('user/getActiveUser');
   }
 
 
-  logIn(body)
-  {
+  logIn(body) {
     return this.http.post('user/logIn', body);
 
   }
 
-  getUserById(body)
-  {
+  getUserById(body) {
     return this.http.post('user/getUserById', body);
   }
 
-  logOut(){
+  logOut() {
     return this.http.get('user/logOut');
   }
 

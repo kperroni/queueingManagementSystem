@@ -13,44 +13,32 @@ import { ToasterService } from 'angular5-toaster/angular5-toaster';
 export class HeaderComponent implements OnInit {
 
   user: Observable<any>;
-//  type: any;
-  constructor(private UserService: UserService, private router: Router, private toaster: ToasterService) {
+
+  constructor(private userService: UserService, private router: Router, private toaster: ToasterService) {
     router.events.subscribe(event => {
-      if(event instanceof NavigationStart) {
-        this.user = this.UserService.getUserSession();
-/*        if(this.user) {
-          this.UserService.getActiveUser().subscribe(
-            (data:any) => {
-              this.type = data.type;
-            },
-            (err) => {console.error(err)}
-          );
-        }
-*/
+      if (event instanceof NavigationStart) {
+        this.user = this.userService.getUserSession();
       }
       // NavigationEnd
       // NavigationCancel
       // NavigationError
       // RoutesRecognized
     });
-   }
-
-  ngOnInit() {
-    
   }
 
-  onLogOut(){
-    this.UserService.logOut().subscribe( 
-      (data:any) => {
-        if(data.message == 1){
+  ngOnInit() { }
+
+  onLogOut() {
+    this.userService.logOut().subscribe(
+      (data: any) => {
+        if (data.message === 1) {
           this.toaster.pop('success', 'Qme', 'You have successfully logged out');
-          this.user = this.UserService.getUserSession();
+          this.user = this.userService.getUserSession();
 
           this.router.navigateByUrl('/home');
-        }       
-        else{
-          console.log("Something went wrong when logging out");
-        }  
+        } else {
+          console.log('Something went wrong when logging out');
+        }
       }
     );
   }

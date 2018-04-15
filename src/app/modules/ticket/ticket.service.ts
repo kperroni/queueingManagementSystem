@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
-import { UserService } from '../user/user.service'
+import { HttpClient } from '@angular/common/http';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class TicketService {
@@ -24,12 +24,12 @@ export class TicketService {
   }
 
   getCurrentActiveTicket(body) {
-    console.log("getting current ticket");
+    console.log('getting current ticket');
     return this.http.post('ticket/getCurrentTicket', body);
   }
 
   updateCurrentTicket(body) {
-    console.log("getting current ticket");
+    console.log('getting current ticket');
     return this.http.post('ticket/updateCurrentTicket', body);
   }
 

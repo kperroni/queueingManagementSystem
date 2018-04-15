@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class StudentService {
@@ -11,7 +11,7 @@ export class StudentService {
   }
 
   getStudentByStudentNumber(studentNumber) {
-    console.log("studentNumber", studentNumber);
+    console.log('studentNumber', studentNumber);
     return this.http.post('student/getStudentByStudentNumber', studentNumber);
   }
   getStudentByStudentId(studentId) {

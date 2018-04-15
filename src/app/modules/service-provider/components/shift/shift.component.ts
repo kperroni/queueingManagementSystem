@@ -13,30 +13,30 @@ import { Router } from '@angular/router';
 export class StartShiftComponent implements OnInit {
 
   queues: any = [];
-  queueDropdownLegend: String = "Select a Queue";
-  selectedQueue: String = "";
+  queueDropdownLegend: String = 'Select a Queue';
+  selectedQueue: String = '';
 
   showCounters = false;
   counters: any = [];
-  counterDropdownLegend: String = "Select a Counter";
-  selectedCounter: String = "";
+  counterDropdownLegend: String = 'Select a Counter';
+  selectedCounter: String = '';
 
-  disableStartShiftButton: boolean = true;
+  disableStartShiftButton = true;
 
-  shiftStarted: boolean = false;
+  shiftStarted = false;
 
   constructor(
-    private QueueService: QueueService,
-    private CounterService: CounterService,
-    private ServiceProviderService: ServiceProviderService,
-    private MessageService: MessageService,
-    private Router: Router
+    private queueService: QueueService,
+    private counterService: CounterService,
+    private serviceProviderService: ServiceProviderService,
+    private messageService: MessageService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.onCheckShift();
 
-    this.QueueService.getQueues()
+    this.queueService.getQueues()
       .subscribe(
         (data: any[]) => this.queues = data
       );
@@ -44,7 +44,7 @@ export class StartShiftComponent implements OnInit {
 
   onQueueSelected(queue) {
     this.queueDropdownLegend = queue.name;
-    this.CounterService.getQueueCounters(queue._id)
+    this.counterService.getQueueCounters(queue._id)
       .subscribe(
         (data: any[]) => this.counters = data
       );
@@ -59,34 +59,34 @@ export class StartShiftComponent implements OnInit {
   }
 
   onStartShift() {
-    this.ServiceProviderService.createShift({ queueId: this.selectedQueue, counterId: this.selectedCounter })
+    this.serviceProviderService.createShift({ queueId: this.selectedQueue, counterId: this.selectedCounter })
       .subscribe(
         (data: any) => {
           console.log(data.message);
-          this.MessageService.setMessage('success', 'Qme', data.message);
-          this.Router.navigate(['/home']);
+          this.messageService.setMessage('success', 'Qme', data.message);
+          this.router.navigate(['/home']);
         }
       );
   }
 
-  onCheckShift(){
-    this.ServiceProviderService.checkShift()
+  onCheckShift() {
+    this.serviceProviderService.checkShift()
     .subscribe(
       (data: any[]) => {
-        if(data.length > 0){
+        if (data.length > 0) {
          this.shiftStarted = true;
-         console.log(data)
+         console.log(data);
         }
       }
     );
   }
 
-  onFinishShift(){
-    this.ServiceProviderService.finishShift().
+  onFinishShift() {
+    this.serviceProviderService.finishShift().
     subscribe(
       (data: any) => {
-        this.MessageService.setMessage('success', 'Qme', data.message);
-        this.Router.navigate(['/home']);
+        this.messageService.setMessage('success', 'Qme', data.message);
+        this.router.navigate(['/home']);
       }
     );
   }

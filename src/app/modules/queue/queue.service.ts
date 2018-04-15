@@ -6,7 +6,7 @@ export class QueueService {
 
   constructor(private http: HttpClient) { }
 
-  getQueues(){
+  getQueues() {
     return this.http.get('queue/getQueues');
   }
 }

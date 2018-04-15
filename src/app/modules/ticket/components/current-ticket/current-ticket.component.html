@@ -16,7 +16,7 @@
     <label for="serviceId" class="black-text">Service</label>
     <select [(ngModel)]="currentTicket.serviceId" name="serviceId" class="mdb-select">
       <option *ngFor='let service of services' [value]="service._id">{{ service.name }}</option>
-  </select>
+    </select>
     <br>
     <label for="username" class="grey-text">Submitted by</label>
     <input type="text" name="username" class="form-control" value="{{ currentTicket.username }}" disabled>
@@ -25,7 +25,7 @@
     <input type="text" name="subject" class="form-control" value="{{ currentTicket.subject }}" disabled>
     <br>
     <label for="description" class="grey-text">Ticket Description</label>
-    <textarea name="description" class="form-control" rows="4" readonly>{{ currentTicket.description }}</textarea>
+    <textarea name="description" class="form-control" rows="3" readonly>{{ currentTicket.description }}</textarea>
     <br>
     <div style="display: none;">
       <label for="currentShiftId" class="grey-text">Shift ID</label>
@@ -33,10 +33,15 @@
         disabled>
       <br>
     </div>
-    <label for="detailActions" class="black-text">Actions Taken</label>
-    <textarea [(ngModel)]="currentTicket.detailActions" name="detailActions" class="form-control" rows="3"></textarea>
+    <label for="actionsHistory" class="black-text">Actions Taken (History)</label>
+    <select name="actionsHistory" [(ngModel)]="selectedAction" class="mdb-select">
+      <option *ngFor='let detail of currentTicket.details; let i = index' [value]="detail.actions">Action #{{ i + 1 }}</option>
+    </select>
+    <textarea [(ngModel)]="selectedAction" name="oldActions" class="form-control" rows="4" readonly></textarea>
     <br>
-
+    <label for="actionsHistory" class="black-text">New Actions Taken</label>
+    <textarea [(ngModel)]="currentTicket.detailActions" name="detailActions" class="form-control" rows="4"></textarea>
+    <br>
     <div class="text-center mt-4">
       <button (click)="onClickUpdateTicket()" class="btn btn-unique">Update Ticket</button>
     </div>
