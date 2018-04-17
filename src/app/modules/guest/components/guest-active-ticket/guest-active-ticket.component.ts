@@ -15,7 +15,7 @@ import { Services } from '@angular/core/src/view';
 export class GuestActiveTicketComponent implements OnInit {
 
   private activeTicket: any;
-  private ticketNumber: any;
+  private ticketNumber: number;
 
   constructor(private ticketService: TicketService,
     private userService: UserService,
@@ -24,23 +24,23 @@ export class GuestActiveTicketComponent implements OnInit {
     private router: Router,
     private activatedRouter: ActivatedRoute) {
 
-    this.activatedRouter.snapshot.params.subscribe(function (params) {
-      console.log(params['ticketNumber']);
-      this.ticketNumber = params['ticketNumber'];
-    });
+    this.ticketNumber = parseInt(this.activatedRouter.snapshot.params['ticketNumber']);
+
+    console.log(this.ticketNumber);
   }
 
   ngOnInit() {
-
-    this.ticketNumber = this.activatedRouter.snapshot.params['ticketNumber'];
     this.ticketService.getTicketByTicketNumber({ ticketNumber: this.ticketNumber }).subscribe(
       (studentTicket: any) => {
 
-        // studentTicket.studentNumber = student.studentNumber;
         this.activeTicket = studentTicket;
+
+        console.log(this.activeTicket);
 
         this.sService.getServiceById({ _id: studentTicket.serviceId }).subscribe(
           (service: any) => {
+
+            console.log(studentTicket.serviceId);
 
             this.ticketService.getActiveTicketsInQueue({ queueId: service.queueId }).subscribe(
               (precedingTickets: any) => {

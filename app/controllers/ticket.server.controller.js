@@ -267,7 +267,7 @@ exports.viewStudentTicket = function (req, res, next) {
 }
 
 exports.getTicketByTicketNumber = function (req, res, next) {
-    Ticket.find({ ticketNumber: req.ticketNumber }).sort({ "weight": 1, "ticketNumber": 1 }).limit(1).exec(function (err, ticket) {
+    Ticket.findOne({ ticketNumber: req.body.ticketNumber }).exec(function (err, ticket) {
         const ret = {};
         if (err) {
             return res.json({ message: "0", err: err });

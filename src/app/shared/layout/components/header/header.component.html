@@ -52,11 +52,11 @@
             </ng-container>
 
             <ng-container *ngIf="(user | async) === null">
-                <li class="nav-item waves-light" mdbRippleRadius>
+                <!-- <li class="nav-item waves-light" mdbRippleRadius>
                     <input [(ng-model)]="ticketNumber" type="text" id="Ticket Number" placeholder="Ticket Number" mdbActive>
-                </li>
+                </li> -->
                 <li class="nav-item waves-light" mdbRippleRadius>
-                    <a class="nav-link" [routerLink]="['/guestActiveTicket',{ticketNumber:23460}]">Show Ticket</a>
+                    <a class="nav-link" (click)="onAlertShow()">Show Guest Ticket</a>
                 </li>
 
                 <li class="nav-item waves-light" mdbRippleRadius>
@@ -83,3 +83,23 @@
         </ul>
     </links>
 </mdb-navbar>
+
+<div class="alert alert-primary" role="alert" id="alertTicketInput">
+    <form class="form-inline">
+        <div class="form-group">
+            <div class="col-sm-4">
+                <input class="form-control" [(ng-model)]="ticketNumber" id="guestticketNumber" type="number" placeholder="Ticket Number">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-4">
+                <input class="form-control" (click)="showGuestTicket()" type="button" value="Show Ticket">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-4">
+                <input class="form-control" (click)="onAlertHide()" id="ticketNumber" type="button" value="Close">
+            </div>
+        </div>
+    </form>
+</div>
