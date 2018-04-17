@@ -45,13 +45,24 @@
                     </li> -->
                 </ng-container>
 
+                <li class="nav-item waves-light" mdbRippleRadius>
+                    <a class="nav-link" (click)="onLogOut()">Logout</a>
+                </li>
+
             </ng-container>
-            <li class="nav-item waves-light" mdbRippleRadius *ngIf="(user | async) === null">
-                <a class="nav-link" href="/login">Login</a>
-            </li>
-            <li class="nav-item waves-light" mdbRippleRadius *ngIf="(user | async) !== null">
-                <a class="nav-link" (click)="onLogOut()">Logout</a>
-            </li>
+
+            <ng-container *ngIf="(user | async) === null">
+                <li class="nav-item waves-light" mdbRippleRadius>
+                    <input [(ng-model)]="ticketNumber" type="text" id="Ticket Number" placeholder="Ticket Number" mdbActive>
+                </li>
+                <li class="nav-item waves-light" mdbRippleRadius>
+                    <a class="nav-link" [routerLink]="['/guestActiveTicket',{ticketNumber:23460}]">Show Ticket</a>
+                </li>
+
+                <li class="nav-item waves-light" mdbRippleRadius>
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+            </ng-container>
         </ul>
         <ul class="navbar-nav nav-flex-icons">
             <li class="nav-item waves-light" mdbRippleRadius>

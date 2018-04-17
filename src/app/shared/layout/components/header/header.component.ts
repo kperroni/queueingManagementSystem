@@ -14,6 +14,8 @@ export class HeaderComponent implements OnInit {
 
   user: Observable<any>;
 
+  ticketNumber: number;
+
   constructor(private userService: UserService, private router: Router, private toaster: ToasterService) {
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {

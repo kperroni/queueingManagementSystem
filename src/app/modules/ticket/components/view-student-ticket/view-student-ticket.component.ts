@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TicketService } from '../../ticket.service';
 import { UserService } from '../../../user/user.service';
 import { StudentService } from '../../../student/student.service';
+import { Router, NavigationStart, Params, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { ServiceService } from '../../../service/service.service';
 import { tick } from '@angular/core/testing';
 import { Services } from '@angular/core/src/view';
@@ -18,14 +19,15 @@ export class ViewStudentTicketComponent implements OnInit {
   constructor(private ticketService: TicketService,
     private userService: UserService,
     private studentService: StudentService,
-    private sService: ServiceService) { }
+    private sService: ServiceService,
+    private router: Router) { }
 
   ngOnInit() {
 
     this.userService.getActiveUser().subscribe(
       (user: any) => {
 
-        if (user.type == 'S') {
+        if (user !== null && user.type == 'S') {
           this.studentService.getStudentByUserId({ id: user._id }).subscribe(
             (student: any) => {
 
@@ -33,34 +35,37 @@ export class ViewStudentTicketComponent implements OnInit {
                 (studentTicket: any) => {
 
                   studentTicket.studentNumber = student.studentNumber;
-                  this.activeTicket = [];
+                  this.activeTicket = studentTicket;
 
-                  this.activeTicket.push(studentTicket);
+                  this.sService.getServiceById({ _id: studentTicket.serviceId }).subscribe(
+                    (service: any) => {
 
-                  this.ticketService.viewPrecedingTickets({ activeStudent: student }).subscribe(
-                    (precedingTickets: any) => {
+                      this.ticketService.getActiveTicketsInQueue({ queueId: service.queueId }).subscribe(
+                        (precedingTickets: any) => {
 
-                      this.activeTicket[0].ticketCount = precedingTickets.length;
+                          this.activeTicket.ticketCount = 0;
 
-                      var minutes = 0;
+                          var minutes = 0;
 
-                      for (var i = 0; i < precedingTickets.length; i++) {
+                          for (var i = 0; i < precedingTickets.length; i++) {
 
-                        if (precedingTickets[0].serviceId !== null) {
+                            if ((precedingTickets[i]._id != studentTicket._id)
+                              && (precedingTickets[i].weight > studentTicket.weight
+                                || (precedingTickets[i].weight == precedingTickets[i].weight
+                                  && precedingTickets[i].creationTime < studentTicket.creationTime
+                                ))) {
 
-                          this.sService.getServiceById({ id: precedingTickets[i].serviceId }).subscribe(
-                            (service: any) => {
-                              minutes += parseInt("" + service.averageMinutes);
+                              ++this.activeTicket.ticketCount;
 
-                              this.activeTicket[0].hours = parseInt("" + (minutes / 60));
-                              this.activeTicket[0].minutes = minutes % 60;
-                            },
-                            err => { console.error(err); });
-                        }
-                        else {
-                          console.log("no service id");
-                        }
-                      }
+                              minutes += parseInt("" + precedingTickets[i].services.averageMinutes);
+                            }
+
+                            this.activeTicket.hours = parseInt("" + (minutes / 60));
+                            this.activeTicket.minutes = minutes % 60;
+                          }
+                        },
+                        err => { console.error(err); }
+                      );
                     },
                     err => { console.error(err); }
                   );
@@ -69,8 +74,14 @@ export class ViewStudentTicketComponent implements OnInit {
               );
             });
         }
+        else {
+          this.router.navigateByUrl('/login');
+        }
       },
-      err => { console.error(err); }
+      err => {
+        console.error(err);
+        this.router.navigateByUrl('/login');
+      }
     );
   }
 

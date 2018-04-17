@@ -58,10 +58,13 @@ export class ViewActiveTicketsComponent implements OnInit {
           );
         }
         else {
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/login');
         }
       },
-      err => { console.error(err); }
+      err => {
+        console.error(err);
+        this.router.navigateByUrl('/login');
+      }
     );
   }
 

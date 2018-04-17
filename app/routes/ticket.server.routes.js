@@ -10,7 +10,7 @@ module.exports = function (app) {
 
     app.post('/ticket/updateCurrentTicket', ticketController.updateCurrentTicket);
 
-    app.post('/ticket/viewPrecedingTickets', ticketController.getPrecedingTickets);
+    app.post('/ticket/viewPrecedingTickets', ticketController.getPrecedingTicketsInQueue);
 
     app.post('/ticket/getStudentTicket', ticketController.viewStudentTicket);
 

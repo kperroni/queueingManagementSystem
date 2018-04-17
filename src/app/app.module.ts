@@ -30,8 +30,8 @@ import { ViewPrecedingTicketsComponent } from './modules/ticket/components/view-
 import { ViewServicesComponent } from './modules/service/view-services/view-services.component';
 import { StartShiftComponent } from './modules/service-provider/components/shift/shift.component';
 import { ServiceProviderService } from './modules/service-provider/service-provider.service';
-import {ViewStudentTicketComponent} from './modules/ticket/components/view-student-ticket/view-student-ticket.component';
-// import { GuestActiveTicketComponent } from './modules/guest/components/guest-active-ticket/guest-active-ticket.component';
+import { ViewStudentTicketComponent } from './modules/ticket/components/view-student-ticket/view-student-ticket.component';
+import { GuestActiveTicketComponent } from './modules/guest/components/guest-active-ticket/guest-active-ticket.component';
 
 // Header & Footer
 import { HeaderComponent } from './shared/layout/components/header/header.component';
@@ -50,6 +50,7 @@ const appRoutes: Routes = [
   { path: 'viewServices', component: ViewServicesComponent },
   { path: 'shift', component: StartShiftComponent },
   { path: 'viewStudentTicket', component: ViewStudentTicketComponent },
+  { path: 'guestActiveTicket/:ticketNumber', component: GuestActiveTicketComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
@@ -69,8 +70,8 @@ const appRoutes: Routes = [
     ViewServicesComponent,
     ViewServicesComponent,
     StartShiftComponent,
-    ViewStudentTicketComponent
-    // GuestActiveTicketComponent
+    ViewStudentTicketComponent,
+    GuestActiveTicketComponent
   ],
 
   imports: [
