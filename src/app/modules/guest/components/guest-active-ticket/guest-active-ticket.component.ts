@@ -2,61 +2,68 @@ import { Component, OnInit } from '@angular/core';
 import { TicketService } from '../../../ticket/ticket.service';
 import { UserService } from '../../../user/user.service';
 import { StudentService } from '../../../student/student.service';
+import { Router, NavigationStart, Params, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { ServiceService } from '../../../service/service.service';
 import { tick } from '@angular/core/testing';
 import { Services } from '@angular/core/src/view';
 
 @Component({
-  selector: 'app-view-student-ticket',
-  templateUrl: './view-student-ticket.component.html',
-  styleUrls: ['./view-student-ticket.component.scss']
+  selector: 'app-guest-active-ticket',
+  templateUrl: './guest-active-ticket.component.html',
+  styleUrls: ['./guest-active-ticket.component.scss']
 })
 export class GuestActiveTicketComponent implements OnInit {
 
   private activeTicket: any;
-  private studentNumber: any;
+  private ticketNumber: number;
 
   constructor(private ticketService: TicketService,
     private userService: UserService,
     private studentService: StudentService,
-    private sService: ServiceService) { }
+    private sService: ServiceService,
+    private router: Router,
+    private activatedRouter: ActivatedRoute) {
+
+    this.ticketNumber = parseInt(this.activatedRouter.snapshot.params['ticketNumber']);
+
+    console.log(this.ticketNumber);
+  }
 
   ngOnInit() {
+    this.ticketService.getTicketByTicketNumber({ ticketNumber: this.ticketNumber }).subscribe(
+      (studentTicket: any) => {
 
-    this.studentService.getStudentByStudentNumber({ studentNumber: this.studentNumber }).subscribe(
-      (student: any) => {
+        this.activeTicket = studentTicket;
 
-        this.ticketService.getStudentTicket({ body: student }).subscribe(
-          (studentTicket: any) => {
+        console.log(this.activeTicket);
 
-            studentTicket.studentNumber = student.studentNumber;
-            this.activeTicket = [];
+        this.sService.getServiceById({ _id: studentTicket.serviceId }).subscribe(
+          (service: any) => {
 
-            this.activeTicket.push(studentTicket);
+            console.log(studentTicket.serviceId);
 
-            this.ticketService.viewPrecedingTickets({ activeStudent: student }).subscribe(
+            this.ticketService.getActiveTicketsInQueue({ queueId: service.queueId }).subscribe(
               (precedingTickets: any) => {
 
-                this.activeTicket[0].ticketCount = precedingTickets.length;
+                this.activeTicket.ticketCount = 0;
 
                 var minutes = 0;
 
                 for (var i = 0; i < precedingTickets.length; i++) {
 
-                  if (precedingTickets[0].serviceId !== null) {
+                  if ((precedingTickets[i]._id != studentTicket._id)
+                    && (precedingTickets[i].weight > studentTicket.weight
+                      || (precedingTickets[i].weight == precedingTickets[i].weight
+                        && precedingTickets[i].creationTime < studentTicket.creationTime
+                      ))) {
 
-                    this.sService.getServiceById({ id: precedingTickets[i].serviceId }).subscribe(
-                      (service: any) => {
-                        minutes += parseInt("" + service.averageMinutes);
+                    ++this.activeTicket.ticketCount;
 
-                        this.activeTicket[0].hours = parseInt("" + (minutes / 60));
-                        this.activeTicket[0].minutes = minutes % 60;
-                      },
-                      err => { console.error(err); });
+                    minutes += parseInt("" + precedingTickets[i].services.averageMinutes);
                   }
-                  else {
-                    console.log("no service id");
-                  }
+
+                  this.activeTicket.hours = parseInt("" + (minutes / 60));
+                  this.activeTicket.minutes = minutes % 60;
                 }
               },
               err => { console.error(err); }
@@ -64,8 +71,9 @@ export class GuestActiveTicketComponent implements OnInit {
           },
           err => { console.error(err); }
         );
-      });
+      },
+      err => { console.error(err); }
+    );
   }
 
 }
-

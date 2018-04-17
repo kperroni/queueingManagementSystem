@@ -19,8 +19,8 @@ export class TicketService {
     return this.http.post('ticket/getActiveTicketsInQueue', body);
   }
 
-  viewPrecedingTickets(activeStudent) {
-    return this.http.post('ticket/viewPrecedingTickets', activeStudent);
+  viewPrecedingTickets(body) {
+    return this.http.post('ticket/viewPrecedingTickets', body);
   }
 
   getCurrentActiveTicket(body) {

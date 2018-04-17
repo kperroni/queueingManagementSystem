@@ -4,6 +4,7 @@ import { Router, NavigationStart } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { MessageService } from '../../../services/messages/message.service';
 import { ToasterService } from 'angular5-toaster/angular5-toaster';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-header',
@@ -26,7 +27,9 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.onAlertHide();
+  }
 
   onLogOut() {
     this.userService.logOut().subscribe(
@@ -40,5 +43,18 @@ export class HeaderComponent implements OnInit {
         }
       }
     );
+  }
+
+  onAlertShow() {
+    $('#alertTicketInput').show();
+  }
+
+  onAlertHide() {
+    $('#alertTicketInput').hide();
+  }
+
+  showGuestTicket() {
+    console.log('tick num : ' + $('#guestticketNumber').val());
+    this.router.navigateByUrl('/guestActiveTicket/' + $('#guestticketNumber').val());
   }
 }

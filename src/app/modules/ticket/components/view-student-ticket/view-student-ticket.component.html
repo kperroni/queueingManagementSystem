@@ -2,26 +2,32 @@
   <h1>Tickets Details</h1>
   <hr>
 
-  <table class="table table-condensed">
-    <tr>
-      <th>Ticket Number</th>
-      <th>Student Number</th>
-      <th>Subject</th>
-      <th>Description</th>
-      <th>Status</th>
-      <th>Preceding Tickets</th>
-      <th>Average Waiting Time</th>
-    </tr>
-    <tr *ngFor="let ticket of activeTicket">
-
-      <td>{{ ticket.ticketNumber }}</td>
-      <td>{{ ticket.studentNumber }}</td>
-      <td>{{ ticket.subject }}</td>
-      <td>{{ ticket.description }}</td>
-      <td>{{ ticket.status }}</td>
-      <td>{{ ticket.ticketCount }}</td>
-      <td>
-        <label ng-if="ticket.hours>0">{{ ticket.hours }} hr(s)</label> {{ticket.minutes}} min(s) </td>
-    </tr>
-  </table>
-</div>
+  <div class="form-group row">
+    <label class="col col-form-label">Ticket Number</label>
+    <label class="col col-form-label">{{ activeTicket.ticketNumber }}</label>
+  </div>
+  <div class="form-group row">
+    <label class="col col-form-label">Student Number</label>
+    <label class="col col-form-label">{{ activeTicket.studentNumber }}</label>
+  </div>
+  <div class="form-group row">
+    <label class="col col-form-label">Subject</label>
+    <label class="col col-form-label">{{ activeTicket.subject }}</label>
+  </div>
+  <div class="form-group row">
+    <label class="col col-form-label">Description</label>
+    <label class="col col-form-label">{{ activeTicket.description }}</label>
+  </div>
+  <div class="form-group row">
+    <label class="col col-form-label">Status</label>
+    <label class="col col-form-label">{{ activeTicket.status }}</label>
+  </div>
+  <div class="form-group row">
+    <label class="col col-form-label">Preceding Tickets</label>
+    <label class="col col-form-label">{{ activeTicket.ticketCount }}</label>
+  </div>
+  <div class="form-group row">
+    <label class="col col-form-label">Average Waiting Time</label>
+    <label class="col col-form-label">
+      <label ng-if="activeTicket.hours > 0">{{ activeTicket.hours }} hr(s)</label> {{activeTicket.minutes}} min(s)</label>
+  </div>

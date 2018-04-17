@@ -200,24 +200,54 @@ exports.getActiveTicketsInQueue = function (req, res, next) {
     });
 }
 
-exports.getPrecedingTickets = function (req, res, next) {
-    var student = req.body.activeStudent;
+exports.getPrecedingTicketsInQueue = function (req, res, next) {
 
-    // Use the 'User' instance's 'find' method to retrieve a new user document
-    Ticket.find({
-        status: 'A',
-        studentId: { $ne: student._id },
-        studentId: { $ne: null }
-        //weight: { $gte: ticket.weight }
-    }).lean().exec(function (err, tickets) {
+    Ticket.aggregate([
+        {
+            "$match": { "status": 'A' }
+        },
+        {
+            "$lookup": {
+                "from": "services",
+                "localField": "serviceId",
+                "foreignField": "_id",
+                "as": "services"
+            }
+        },
+        {
+            "$unwind": {
+                "path": "$services"
+            }
+        },
+        {
+            "$redact": {
+                "$cond": {
+                    "if": {
+                        "$eq": ["$services.queueId", ObjectId(req.body.queueId)]
+                    },
+                    "then": "$$KEEP",
+                    "else": "$$PRUNE"
+                }
+            }
+        },
+        {
+            "$sort": {
+                'weight': 1,
+                'ticketNumber': 1
+            }
+        }
+    ], function (err, tickets) {
         if (err) {
             return next(err);
         } else {
-            res.json(tickets);
+            if (req.callback) {
+                next(tickets);
+            } else {
+                res.json(tickets);
+            }
         }
     });
-
-};
+}
 
 exports.viewStudentTicket = function (req, res, next) {
     var student = req.body;
@@ -237,7 +267,7 @@ exports.viewStudentTicket = function (req, res, next) {
 }
 
 exports.getTicketByTicketNumber = function (req, res, next) {
-    Ticket.find({ ticketNumber: req.ticketNumber }).sort({ "weight": 1, "ticketNumber": 1 }).limit(1).exec(function (err, ticket) {
+    Ticket.findOne({ ticketNumber: req.body.ticketNumber }).exec(function (err, ticket) {
         const ret = {};
         if (err) {
             return res.json({ message: "0", err: err });
