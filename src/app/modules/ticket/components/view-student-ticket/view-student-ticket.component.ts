@@ -28,7 +28,7 @@ export class ViewStudentTicketComponent implements OnInit {
       (user: any) => {
 
         if (user !== null && user.type == 'S') {
-          this.studentService.getStudentByUserId({ id: user._id }).subscribe(
+          this.studentService.getStudentByUserId({ userId: user._id }).subscribe(
             (student: any) => {
 
               this.ticketService.getStudentTicket({ body: student }).subscribe(
