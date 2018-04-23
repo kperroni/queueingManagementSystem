@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { TicketService } from '../../../ticket/ticket.service';
 import { UserService } from '../../../user/user.service';
 import { StudentService } from '../../../student/student.service';
@@ -12,10 +12,10 @@ import { Services } from '@angular/core/src/view';
   templateUrl: './guest-active-ticket.component.html',
   styleUrls: ['./guest-active-ticket.component.scss']
 })
-export class GuestActiveTicketComponent implements OnInit {
+export class GuestActiveTicketComponent implements OnInit, OnChanges {
 
   private activeTicket: any;
-  private ticketNumber: number;
+  public ticketNumber: any;
 
   constructor(private ticketService: TicketService,
     private userService: UserService,
@@ -24,12 +24,27 @@ export class GuestActiveTicketComponent implements OnInit {
     private router: Router,
     private activatedRouter: ActivatedRoute) {
 
+    this.activeTicket = null;
     this.ticketNumber = parseInt(this.activatedRouter.snapshot.params['ticketNumber']);
-
-    console.log(this.ticketNumber);
+    console.log("guest comp cons : " + this.ticketNumber);
   }
 
   ngOnInit() {
+
+    this.showGuestTicket();
+  }
+
+  ngOnChanges() {
+
+    this.showGuestTicket();
+  }
+
+  showGuestTicket() {
+    this.activeTicket = null;
+    this.ticketNumber = parseInt(this.activatedRouter.snapshot.params['ticketNumber']);
+    //this.ticketNumber = ;
+    console.log("at guest comp : " + this.ticketNumber);
+
     this.ticketService.getTicketByTicketNumber({ ticketNumber: this.ticketNumber }).subscribe(
       (studentTicket: any) => {
 
