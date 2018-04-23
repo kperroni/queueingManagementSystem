@@ -80,6 +80,8 @@ export class CreateTicketComponent implements OnInit {
     this.customer.firstName = '';
     this.customer.lastName = '';
     this.customer.email = '';
+    this.ticket.serviceId = "";
+    this.studentInformation = "";
     this.user = { type: '' }; // initialize to avoid the error meanwhile the function recover the actual value and override it.
 
     this.serviceService.getServices().subscribe(
@@ -93,6 +95,42 @@ export class CreateTicketComponent implements OnInit {
   }
 
   onClickCreateTicket() {
+    
+    // validations
+    if(this.user.type == 'E') {
+      if(this.typeCustomer == "Student") {
+        if(this.studentInformation == "") {
+          this.toaster.pop('error', 'Qme', 'A valid student number is required!');
+          return;
+        }
+      } else {
+        if(this.customer.firstName == '') {
+          this.toaster.pop('error', 'Qme', 'Guest first name is required!');
+          return;
+        }
+        if(this.customer.lastName == '') {
+          this.toaster.pop('error', 'Qme', 'Guest last name is required!');
+          return;
+        }
+      }
+    }
+
+    if (this.ticket.serviceId == "") {
+      this.toaster.pop('error', 'Qme', 'The service is required!');
+      return;
+    }    
+    if (this.ticket.subject == "") {
+      this.toaster.pop('error', 'Qme', 'The subject is required!');
+      return;
+    }
+    if (this.ticket.description == "") {
+      this.toaster.pop('error', 'Qme', 'Details are required!');
+      return;
+    }
+
+    
+
+
     // preparing the object to send to the server
     let sendObj = {
       ticket: this.ticket,
@@ -110,14 +148,12 @@ export class CreateTicketComponent implements OnInit {
     this.ticketService.createTicket(sendObj).subscribe(
       (data: any) => {
         let creationResult = data;
-        console.log("data", data);
         switch (creationResult.message) {
           case '0': {
             this.toaster.pop('error', 'Qme', 'Missing information. Please try again');
             break;
           }
           case '1': {
-            console.log("message = 1");
             this.message.clearMessage();
             this.message.setMessage('success', 'Qme', 'The ticket number ' + creationResult.ticketNumber + ' was successfully created!');
             this.router.navigate(['/home']);
@@ -127,6 +163,7 @@ export class CreateTicketComponent implements OnInit {
       },
       err => { console.error(err); }
     );
+
   }
 
   onKeyup(event: KeyboardEvent) {

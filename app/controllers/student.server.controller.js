@@ -33,8 +33,8 @@ exports.getStudents = function (req, res, next) {
 };
 
 exports.getStudentByUserId = function (req, res, next) {
-    console.log("controller", "req.body", req.body);
-    StudentModel.findOne({ userId: req.body.id }, function (err, student) {
+    console.log("getStudentByUserId", "req.body", req.body);
+    StudentModel.findOne({ userId: req.body.userId }, function (err, student) {
         if (err) {
             return next(err);
         } else {
