@@ -84,11 +84,11 @@
     </links>
 </mdb-navbar>
 
-<div class="alert alert-primary" role="alert" id="alertTicketInput">
+<div class="alert alert-primary" role="alert" id="alertTicketInput" *ngIf="showAlert">
     <form class="form-inline">
         <div class="form-group">
             <div class="col-sm-4">
-                <input class="form-control" [(ng-model)]="ticketNumber" id="guestticketNumber" type="number" placeholder="Ticket Number">
+                <input class="form-control" name="ticketNumber" [(ngModel)]="ticketNumber" type="number" placeholder="Ticket Number">
             </div>
         </div>
         <div class="form-group">
